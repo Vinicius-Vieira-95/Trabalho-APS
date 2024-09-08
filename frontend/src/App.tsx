@@ -1,8 +1,15 @@
+ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';  
+import LoginPage from "./pages/Login/LoginPage";  
+import Alunos from './pages/Alunos/Alunos';
+
 function App() {  
   return (  
-    <div className="bg-gray-900 h-screen flex items-center justify-center">  
-      <h1 className="text-3xl font-bold text-indigo-800">Olá Mundo</h1>  
-    </div>  
+    <Router>  
+      <Routes>  
+        <Route path="/" element={<LoginPage />} />  
+        <Route path='/alunos' element={<Alunos/>}/>
+      </Routes>  
+    </Router>  
   );  
 }  
 
