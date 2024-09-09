@@ -1,15 +1,12 @@
- import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';  
-import LoginPage from "./pages/Login/LoginPage";  
-import Alunos from './pages/Alunos/Alunos';
+// App.tsx  
+import AppRouter from './Routes'; 
+import { AuthProvider } from './context/AuthProvider'; 
 
 function App() {  
   return (  
-    <Router>  
-      <Routes>  
-        <Route path="/" element={<LoginPage />} />  
-        <Route path='/alunos' element={<Alunos/>}/>
-      </Routes>  
-    </Router>  
+    <AuthProvider> 
+      <AppRouter />  
+    </AuthProvider>  
   );  
 }  
 

@@ -1,15 +1,29 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';  
-import LoginPage from './pages/Login/LoginPage'
-import AlunosPage from './pages/Alunos/Alunos';
+// AppRouter.tsx  
+import {  Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';  
+import LoginPage from './pages/Login/LoginPage';  
+import AlunosPage from './pages/Alunos/Alunos';  
+import { useAuth } from './hook/useAuth';  
+ 
 
-const AppRouter = () => {  
+const AppRouter: React.FC = () => {  
+  const auth = useAuth();   
+  
   return (  
-    <Router>  
-      <Routes>  
-        <Route path="/" element={<LoginPage />} />  
-        <Route path="/alunos" element={<AlunosPage />} /> 
-      </Routes>  
-    </Router>  
+    <BrowserRouter>
+      <Routes>
+        {auth?.isAuthenticated() ? (
+          <>
+           
+            <Route path='/alunos' element={<AlunosPage />} />
+          </>
+        ) : (
+          <>
+            <Route path='/' element={<LoginPage />} />
+            <Route path='*' element={<Navigate to='/' />} />
+          </>
+        )}
+      </Routes>
+    </BrowserRouter>
   );  
 };  
 
