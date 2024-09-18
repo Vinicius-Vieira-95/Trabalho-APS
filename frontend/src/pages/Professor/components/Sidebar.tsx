@@ -3,7 +3,7 @@ import { useAuth } from "../../../hook/useAuth";
 
 const Sidebar = () => {  
   const [openEvents, setOpenEvents] = useState(true);  
-  const [activeItem, setActiveItem] = useState("evento2");  
+  const [activeItem, setActiveItem] = useState("evento3");  
   const [hoveredEvents, setHoveredEvents] = useState(false);  
   const { user } = useAuth() || {};  
 
