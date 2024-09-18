@@ -1,27 +1,40 @@
-// AppRouter.tsx  
-import {  Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';  
+import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';  
 import LoginPage from './pages/Login/LoginPage';  
 import AlunosPage from './pages/Alunos/Alunos';
-import ProfessorPage from './pages/Professor/Professor'  
+import ProfessorPage from './pages/Professor/Professor';  
 import { useAuth } from './hook/useAuth';  
- 
+import Dashboard from './pages/Alunos/Dashboard';
 
 const AppRouter: React.FC = () => {  
   const auth = useAuth();   
-  
+
   return (  
     <BrowserRouter>
       <Routes>
-        {auth?.isAuthenticated() ? (
-          <>
-           
-            <Route path='/alunos' element={<AlunosPage />} />
-          </>
-        ) : (
+        {/* Rotas públicas */}
+        {!auth?.isAuthenticated() && (
           <>
             <Route path='/' element={<LoginPage />} />
             <Route path='*' element={<Navigate to='/' />} />
-            <Route path='/professor' element={<ProfessorPage />} />
+          </>
+        )}
+
+        {/* Rotas protegidas */}
+        {auth?.isAuthenticated() && (
+          <>
+            {auth.user?.type === 0 && (
+              <>
+                <Route path='/alunos' element={<AlunosPage />} />
+                <Route path='/dashboard' element={<Dashboard />} />
+                <Route path='*' element={<Navigate to='/alunos' />} />
+              </>
+            )}
+            {auth.user?.type === 1 && (
+              <>
+                <Route path='/professor' element={<ProfessorPage />} />
+                <Route path='*' element={<Navigate to='/professor' />} />
+              </>
+            )}
           </>
         )}
       </Routes>
