@@ -87,7 +87,7 @@ const Sidebar = () => {
                 <a  
                   href="#"  
                   className={`flex items-center p-2 rounded-lg ${  
-                    activeItem === "evento1"  
+                    activeItem === "evento2"  
                       ? "text-green-600"  
                       : "text-gray-900 hover:bg-gray-100"  
                   }`}  
@@ -100,7 +100,7 @@ const Sidebar = () => {
                 <a  
                   href="#"  
                   className={`flex items-center p-2 rounded-lg ${  
-                    activeItem === "evento2"  
+                    activeItem === "evento3"  
                       ? "text-green-600"  
                       : "text-gray-900 hover:bg-gray-100"  
                   }`}  
@@ -113,7 +113,7 @@ const Sidebar = () => {
                 <a  
                   href="#"  
                   className={`flex items-center p-2 rounded-lg ${  
-                    activeItem === "evento1"  
+                    activeItem === "evento4"  
                       ? "text-green-600"  
                       : "text-gray-900 hover:bg-gray-100"  
                   }`}  
