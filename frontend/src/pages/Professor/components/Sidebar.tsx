@@ -3,20 +3,14 @@ import { useAuth } from "../../../hook/useAuth";
 
 const Sidebar = () => {  
   const [openEvents, setOpenEvents] = useState(true);  
-  const [activeItem, setActiveItem] = useState("evento2");  
-  const [hoveredDashboard, setHoveredDashboard] = useState(false);  
+  const [activeItem, setActiveItem] = useState("evento3");  
   const [hoveredEvents, setHoveredEvents] = useState(false);  
   const { user } = useAuth() || {};  
 
   useEffect(() => {  
     setOpenEvents(true);  
     setActiveItem("evento2");  
-  }, []);  
-
-  const handleDashboardClick = () => {  
-    console.log("Navegando para Dashboard");  
-    // Adicione aqui a lógica de navegação para o Dashboard  
-  };  
+  }, []); 
 
   const toggleEvents = () => {  
     setOpenEvents((prev) => !prev);  
@@ -40,24 +34,7 @@ const Sidebar = () => {
               alt="Universidade Estadual do Ceará"  
               className="mb-2 w-[20rem] mr-2"  
             />  
-          </li>  
-
-         
-          <li>  
-            <button  
-              onClick={handleDashboardClick}  
-              onMouseEnter={() => setHoveredDashboard(true)}  
-              onMouseLeave={() => setHoveredDashboard(false)}  
-              className={`relative flex items-center p-2 rounded-lg w-full text-left text-gray-900 transition-colors   
-                ${hoveredDashboard ? "bg-gray-100" : ""}`}  
-            >  
-              <span className="flex-1">Dashboard</span>  
-              {hoveredDashboard && (  
-                <span className="absolute left-full w-1.5 h-full bg-green-500 rounded-r-lg"></span>  
-              )}  
-            </button>  
-          </li>  
-
+          </li>
          
           <li>  
             <button  
@@ -93,7 +70,7 @@ const Sidebar = () => {
          
           {openEvents && (  
             <ul className="ml-4 space-y-2">  
-              <li>  
+            <li>  
                 <a  
                   href="#"  
                   className={`flex items-center p-2 rounded-lg ${  
@@ -103,7 +80,7 @@ const Sidebar = () => {
                   }`}  
                   onClick={() => handleItemClick("evento1")}  
                 >  
-                  Histórico  
+                  Criar novo evento 
                 </a>  
               </li>  
               <li>  
@@ -116,7 +93,33 @@ const Sidebar = () => {
                   }`}  
                   onClick={() => handleItemClick("evento2")}  
                 >  
+                  Histórico  
+                </a>  
+              </li>  
+              <li>  
+                <a  
+                  href="#"  
+                  className={`flex items-center p-2 rounded-lg ${  
+                    activeItem === "evento3"  
+                      ? "text-green-600"  
+                      : "text-gray-900 hover:bg-gray-100"  
+                  }`}  
+                  onClick={() => handleItemClick("evento3")}  
+                >  
                   Em Aberto  
+                </a>  
+              </li>
+              <li>  
+                <a  
+                  href="#"  
+                  className={`flex items-center p-2 rounded-lg ${  
+                    activeItem === "evento4"  
+                      ? "text-green-600"  
+                      : "text-gray-900 hover:bg-gray-100"  
+                  }`}  
+                  onClick={() => handleItemClick("evento4")}  
+                >  
+                  Em andamento  
                 </a>  
               </li>  
             </ul>  
