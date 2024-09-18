@@ -8,6 +8,8 @@ export class UserService {
 
   async findUserById(userId: string): Promise<User> {
     const user = await this.userRepository.findById(userId);
+    console.log('🟢🟢🟢🟢 user', user);
+
     return user;
   }
 }
