@@ -6,7 +6,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
+import { commonStyles, CustomBox, CustomButton, CustomTableCell } from './custom_style/style';
 
 const mockTabelaEventosAluno = [
     {
@@ -30,13 +31,6 @@ const mockTabelaEventosAluno = [
 
 function DataTable() {
 
-    const commonStyles = {
-        bgcolor: 'background.paper',
-        m: 1,
-        width: '8rem',
-        height: '2rem',
-    };
-
     return (
         <Box>
             <Typography
@@ -51,11 +45,11 @@ function DataTable() {
                 <Table aria-label="simple table">
                     <TableHead>
 
-                        <TableRow sx={{alignItems: 'center'}}>
-                            <TableCell sx={{textAlign:'center'}}>Evento</TableCell>
-                            <TableCell sx={{textAlign:'center'}}>Descrição</TableCell>
-                            <TableCell sx={{textAlign:'center'}}>Categoria</TableCell>
-                            <TableCell sx={{textAlign:'center'}}>Ações</TableCell>
+                        <TableRow sx={{ alignItems: 'center' }}>
+                            <TableCell sx={{ textAlign: 'center' }}>Evento</TableCell>
+                            <TableCell sx={{ textAlign: 'center' }}>Descrição</TableCell>
+                            <TableCell sx={{ textAlign: 'center' }}>Categoria</TableCell>
+                            <TableCell sx={{ textAlign: 'center' }}>Ações</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -63,22 +57,16 @@ function DataTable() {
                             <TableRow key={index}>
                                 <TableCell>{evento.evento}</TableCell>
                                 <TableCell>{evento.descricao}</TableCell>
-                                <Box sx={{
-                                    ...commonStyles, borderRadius: '30px',
-                                    backgroundColor: '#DAF8E6',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    display: 'flex',
-                                }}>
-                                    <TableCell sx={{ color: '#1A8245', textAlign: 'center' }}>{evento.categoria}</TableCell>
-                                </Box>
-                                <TableCell>
-                                    <Button>
+                                <CustomBox sx={{...commonStyles}}>
+                                    <CustomTableCell>{evento.categoria}</CustomTableCell >
+                                </CustomBox>
+                                <TableCell >
+                                    <CustomButton sx={{border: '2px solid #007AFF'}}>
                                         Editar
-                                    </Button>
-                                    <Button>
+                                    </CustomButton>
+                                    <CustomButton sx={{border: '2px solid #FF3B30'}}>
                                         Cancelar
-                                    </Button>
+                                    </CustomButton>
                                 </TableCell>
                             </TableRow>
                         ))}
