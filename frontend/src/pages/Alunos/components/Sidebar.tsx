@@ -26,11 +26,11 @@ const Sidebar = () => {
 
   return (
     <aside
-      id="default-sidebar"
-      className="w-64 h-screen bg-white shadow-md flex flex-col"
-      aria-label="Sidebar"
-    >
-      <div className="flex-grow px-3 py-4 overflow-y-auto">
+    id="default-sidebar"
+    className="w-64 h-screen bg-white shadow-md flex flex-col font-inter text-TextSide"
+    aria-label="Sidebar"
+  >
+      <div className="flex-grow px-3 py-4 overflow-y-auto ">
         <ul className="ml-4 space-y-2">
           <li>
             <img
@@ -49,7 +49,7 @@ const Sidebar = () => {
                 ${hoveredDashboard ? "bg-gray-100" : ""}`}
               onClick={() => handleItemClick("dashboard")}
             >
-              <span className="flex-1">Dashboard</span>
+              <span className="flex-1 font-inter text-TextSide">Dashboard</span>
               {hoveredDashboard && (
                 <span className="absolute left-full w-1.5 h-full bg-green-500 rounded-r-lg"></span>
               )}
@@ -65,7 +65,7 @@ const Sidebar = () => {
                 ${hoveredEvents ? "bg-gray-100" : ""}   
                 ${openEvents ? "bg-gray-100" : ""}`}
             >
-              <span className="flex-1">Eventos</span>
+              <span className="flex-1 font-inter text-TextSide">Eventos</span>
               <svg
                 className="w-3 h-3"
                 aria-hidden="true"
@@ -92,7 +92,7 @@ const Sidebar = () => {
               <li>
                 <Link
                   to="#"
-                  className={`flex items-center p-2 rounded-lg ${
+                  className={`flex items-center font-inter text-TextSide p-2 rounded-lg ${
                     activeItem === "evento1"
                       ? "text-green-600"
                       : "text-gray-900 hover:bg-gray-100"
@@ -105,7 +105,7 @@ const Sidebar = () => {
               <li>
                 <Link
                   to="/alunos"
-                  className={`flex items-center p-2 rounded-lg ${
+                  className={`flex items-center font-inter text-TextSide p-2 rounded-lg ${
                     activeItem === "evento2"
                       ? "text-green-600"
                       : "text-gray-900 hover:bg-gray-100"
