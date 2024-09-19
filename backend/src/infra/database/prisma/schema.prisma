@@ -23,3 +23,10 @@ model User {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now())
 }
+
+model Evento {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  nome       String
+  descricao  String
+  status     String
+}
