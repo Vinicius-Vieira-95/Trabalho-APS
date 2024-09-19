@@ -61,10 +61,10 @@ function DataTable() {
                                     <CustomTableCell>{evento.categoria}</CustomTableCell >
                                 </CustomBox>
                                 <TableCell >
-                                    <CustomButton sx={{border: '2px solid #007AFF'}}>
+                                    <CustomButton sx={{border: '2px solid #007AFF', color: '#007AFF'}}>
                                         Editar
                                     </CustomButton>
-                                    <CustomButton sx={{border: '2px solid #FF3B30'}}>
+                                    <CustomButton sx={{border: '2px solid #FF3B30', color: '#FF3B30'}}>
                                         Cancelar
                                     </CustomButton>
                                 </TableCell>
