@@ -27,7 +27,7 @@ const Sidebar = () => {
   return (
     <aside
     id="default-sidebar"
-    className="w-64 h-screen bg-white shadow-md flex flex-col font-inter text-TextSide"
+    className="w-64 h-screen bg-white shadow-md border border-gray-100 flex flex-col font-inter "
     aria-label="Sidebar"
   >
       <div className="flex-grow px-3 py-4 overflow-y-auto ">
