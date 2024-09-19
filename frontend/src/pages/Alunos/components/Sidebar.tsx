@@ -14,8 +14,6 @@ const Sidebar = () => {
     setActiveItem("evento2");
   }, []);
 
-
-
   const toggleEvents = () => {
     setOpenEvents((prev) => !prev);
   };
@@ -26,10 +24,10 @@ const Sidebar = () => {
 
   return (
     <aside
-    id="default-sidebar"
-    className="w-64 h-screen bg-white shadow-md border border-gray-100 flex flex-col font-inter "
-    aria-label="Sidebar"
-  >
+      id="default-sidebar"
+      className="w-64 h-screen bg-white shadow-md border border-gray-100 flex flex-col font-inter "
+      aria-label="Sidebar"
+    >
       <div className="flex-grow px-3 py-4 overflow-y-auto ">
         <ul className="ml-4 space-y-2">
           <li>
@@ -41,16 +39,16 @@ const Sidebar = () => {
           </li>
 
           <li>
-          <Link
+            <Link
               to="/dashboard"
               onMouseEnter={() => setHoveredDashboard(true)}
               onMouseLeave={() => setHoveredDashboard(false)}
               className={`relative flex items-center p-2 rounded-lg w-full text-left text-gray-900 transition-colors   
-                ${hoveredDashboard ? "bg-gray-100" : ""}`}
+      ${hoveredDashboard || activeItem === "dashboard" ? "bg-gray-100" : ""}`}
               onClick={() => handleItemClick("dashboard")}
             >
               <span className="flex-1 font-inter text-TextSide">Dashboard</span>
-              {hoveredDashboard && (
+              {(hoveredDashboard || activeItem === "dashboard") && (
                 <span className="absolute left-full w-1.5 h-full bg-green-500 rounded-r-lg"></span>
               )}
             </Link>
@@ -62,8 +60,7 @@ const Sidebar = () => {
               onMouseEnter={() => setHoveredEvents(true)}
               onMouseLeave={() => setHoveredEvents(false)}
               className={`relative flex items-center p-2 rounded-lg w-full text-left text-gray-900 transition-colors   
-                ${hoveredEvents ? "bg-gray-100" : ""}   
-                ${openEvents ? "bg-gray-100" : ""}`}
+      ${hoveredEvents || openEvents ? "bg-gray-100" : ""}`}
             >
               <span className="flex-1 font-inter text-TextSide">Eventos</span>
               <svg
@@ -81,12 +78,11 @@ const Sidebar = () => {
                   d="m1 1 4 4 4-4"
                 />
               </svg>
-              {hoveredEvents && (
+              {(hoveredEvents || activeItem.includes("evento")) && (
                 <span className="absolute left-full w-1.5 h-full bg-green-500 rounded-r-lg"></span>
               )}
             </button>
           </li>
-
           {openEvents && (
             <ul className="ml-4 space-y-2">
               <li>
@@ -100,6 +96,9 @@ const Sidebar = () => {
                   onClick={() => handleItemClick("evento1")}
                 >
                   Histórico
+                  {activeItem === "evento1" && (
+                    <span className="absolute left-full w-1.5 h-full bg-green-500 rounded-r-lg"></span>
+                  )}
                 </Link>
               </li>
               <li>
@@ -113,6 +112,9 @@ const Sidebar = () => {
                   onClick={() => handleItemClick("evento2")}
                 >
                   Em Aberto
+                  {activeItem === "evento2" && (
+                    <span className="absolute left-full w-1.5 h-full bg-green-500 rounded-r-lg"></span>
+                  )}
                 </Link>
               </li>
             </ul>
