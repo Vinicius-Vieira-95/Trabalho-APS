@@ -4,6 +4,7 @@ import { PrismaUserRepository } from '@/infra/database/prisma/repositories/user.
 import { UserRepository } from '@/domain/repositories/user.repository';
 import { EventRepository } from '@/domain/repositories/event.repository';
 import { PrismaEventRepository } from '@/infra/database/prisma/repositories/event.repository';
+
 @Module({
   providers: [
     PrismaService,
