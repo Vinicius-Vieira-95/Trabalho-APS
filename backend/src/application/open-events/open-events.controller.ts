@@ -1,15 +1,13 @@
 /* eslint-disable prettier/prettier */
 import { Controller, Get } from '@nestjs/common';
-import { EventosService } from './open-events.service';
+import { EventsService } from './open-events.service';
 
-@Controller('eventos')
-export class EventosController {
-  constructor(private readonly eventosService: EventosService) {}
+@Controller('events')
+export class EventsController {
+  constructor(private readonly eventsService: EventsService) {}
 
-  // Endpoint para listar eventos em aberto
-  @Get('em-aberto')
-  async findEventosEmAberto() {
-    return this.eventosService.findEventosEmAberto();
+  @Get('open')
+  async findOpenEvents() {
+    return this.eventsService.findOpenEvents();
   }
 }
-

@@ -1,14 +1,15 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../infra/database/prisma/prisma.service'; 
+import { PrismaService } from '../../infra/database/prisma/prisma.service';
+
 @Injectable()
-export class EventosService {
+export class EventsService {
   constructor(private prisma: PrismaService) {}
 
-  async findEventosEmAberto() {
+  async findOpenEvents() {
     return this.prisma.evento.findMany({
       where: {
-        status: 'em aberto', 
+        status: 'open',
       },
     });
   }
