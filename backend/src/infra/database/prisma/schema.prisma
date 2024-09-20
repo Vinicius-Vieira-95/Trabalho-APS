@@ -17,16 +17,70 @@ enum Role {
 }
 
 model User {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String   @unique
+  type         Role     @default(STUDENT)
+  email        String
+  registration String
+  password     String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
+}
+
+model Group {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Activity {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String   @unique
-  type        Role     @default(STUDENT)
+  description String
+  maxTime     Int
+  groupId     String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now())
 }
 
 model Event {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  description String
-  status     String
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String
+  name          String   @unique
+  activityId    String
+  startDate     DateTime
+  status        String
+  endDate       DateTime
+  description   String
+  autoFrequency Boolean
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now())
+}
+
+type ActivitiesData {
+  activityId     String
+  hoursCompleted Int
+}
+
+model Report {
+  id         String           @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String
+  activities ActivitiesData[]
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @default(now())
+}
+
+type UsersList {
+  userId   String
+  attended Boolean
+}
+
+model FrequencyList {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  eventId   String
+  usersList UsersList[]
+  teacherId String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now())
 }
