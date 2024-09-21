@@ -1,26 +1,49 @@
-/* eslint-disable prettier/prettier */
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { EventRepository } from '@/domain/repositories/event.repository';
-import { Event } from '@prisma/client';
+import { Event, EventStatus } from '@prisma/client';
 
 @Injectable()
 export class PrismaEventRepository implements EventRepository {
   constructor(private prisma: PrismaService) {}
-
-  async getByOpenStatus(): Promise<Event[]> {
-    return await this.prisma.event.findMany({
+  async updateStatusById({
+    id,
+    status,
+  }: {
+    id: string;
+    status: EventStatus;
+  }): Promise<Event> {
+    return await this.prisma.event.update({
       where: {
-        status: 'open',
+        id,
+      },
+      data: {
+        status,
       },
     });
   }
 
-  async getEventById(id: string): Promise<Event> {
-    try {
-      return await this.prisma.event.findUnique({ where: { id } });
-    } catch (error) {
-      throw new NotFoundException('Event not found');
-    }
+  async findById(id: string): Promise<Event> {
+    return await this.prisma.event.findFirst({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async getByInProgressStatus(): Promise<Event[]> {
+    return await this.prisma.event.findMany({
+      where: {
+        status: 'IN_PROGRESS',
+      },
+    });
+  }
+
+  async getByOpenStatus(): Promise<Event[]> {
+    return await this.prisma.event.findMany({
+      where: {
+        status: 'OPEN',
+      },
+    });
   }
 }

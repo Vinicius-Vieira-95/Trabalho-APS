@@ -1,73 +1,105 @@
-/* eslint-disable prettier/prettier */
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { EventRepository } from '@/domain/repositories/event.repository';
-import { FrequencyListRepository } from '@/domain/repositories/frequency-list.repository';
+import { TokenAdapter } from '@/infra/adapters/token.adapter';
+import { InvalidParamError } from '@/presentation/errors';
 import { UserRepository } from '@/domain/repositories/user.repository';
+import { FrequencyRepository } from '@/domain/repositories/frequency.repository';
 
 @Injectable()
 export class EventService {
   constructor(
     private eventRepository: EventRepository,
-    private frequencyListRepository: FrequencyListRepository,
     private userRepository: UserRepository,
+    private tokenAdapter: TokenAdapter,
+    private frequencyRepository: FrequencyRepository,
   ) {}
 
-  async findOpenEvents() {
+  async getOpenEvents() {
     return await this.eventRepository.getByOpenStatus();
   }
 
-  async registerUserInEvent({
+  async getInProgressEvents() {
+    return await this.eventRepository.getByInProgressStatus();
+  }
+
+  async generateAttendanceSignatureToken({
     eventId,
-    userId,
+    timeToExpire,
   }: {
     eventId: string;
-    userId: string;
+    timeToExpire: number;
   }) {
-    const user = await this.userRepository.findById(userId);
+    const event = await this.eventRepository.findById(eventId);
 
-    if (user.type !== 'STUDENT') {
-      throw new HttpException(
-        'Only students can be registered in an event',
-        HttpStatus.EXPECTATION_FAILED,
+    if (!event) {
+      throw new InvalidParamError('Evento não encontrado');
+    }
+
+    const token = await this.tokenAdapter.generateToken(timeToExpire, {
+      eventId,
+    });
+
+    return token;
+  }
+
+  async validateAttendanceSignatureToken({
+    email,
+    signatureToken,
+  }: {
+    email: string;
+    signatureToken: string;
+  }) {
+    await this.tokenAdapter.verifyToken(signatureToken);
+
+    const { eventId } = this.tokenAdapter.decodeToken(signatureToken);
+
+    const user = await this.userRepository.findByEmail(email);
+
+    if (!user) {
+      throw new InvalidParamError('Usuário não encontrado');
+    }
+
+    await this.frequencyRepository.addUserPresenceByEventId({
+      eventId,
+      userId: user.id,
+    });
+
+    return { success: 'Presença registrada com sucesso' };
+  }
+
+  async findFrequencyListFromEvent(eventId: string) {
+    const event = await this.eventRepository.findById(eventId);
+
+    if (!event) {
+      throw new InvalidParamError('Evento não encontrado');
+    }
+
+    if (!event.autoFrequency) {
+      throw new InvalidParamError(
+        'Este evento não permite gerenciamento de frequência',
       );
     }
 
-    let frequencyList =
-      await this.frequencyListRepository.getFrequencyListByEvent(eventId);
+    return await this.frequencyRepository.findByEventId(eventId);
+  }
 
-    if (!frequencyList) {
-      const event = await this.eventRepository.getEventById(eventId);
-      frequencyList = await this.frequencyListRepository.createFrequencyList({
-        eventId,
-        teacherId: event.userId,
-        usersList: [],
-      });
-    }
+  async updateFrequencyList({
+    frequencyListId,
+    usersList,
+  }: {
+    frequencyListId: string;
+    usersList: { userId: string; attended: boolean }[];
+  }) {
+    return await this.frequencyRepository.updateUsersListById({
+      id: frequencyListId,
+      usersList,
+    });
+  }
 
-    let usersList = [...frequencyList.usersList];
-
-    if (usersList.find((value) => value.userId === userId && value.attended)) {
-      usersList = usersList.map((value) =>
-        value.userId === userId ? { ...value, attended: false } : { ...value },
-      );
-    } else if (
-      usersList.find((value) => value.userId === userId && !value.attended)
-    ) {
-      usersList = usersList.map((value) =>
-        value.userId === userId ? { ...value, attended: true } : { ...value },
-      );
-    } else {
-      usersList = [...usersList, { attended: true, userId }];
-    }
-    const newFrequencyList = { ...frequencyList, usersList: [...usersList] };
-
-    const id = newFrequencyList.id;
-
-    delete newFrequencyList.id;
-
-    return await this.frequencyListRepository.saveFrequencyList(
-      id,
-      newFrequencyList,
-    );
+  async finishEvent(eventId: string) {
+    return await this.eventRepository.updateStatusById({
+      status: 'FINISHED',
+      id: eventId,
+    });
   }
 }
