@@ -20,7 +20,19 @@ export class EventService {
   ) {}
 
   async getOpenEvents() {
-    return await this.eventRepository.getByOpenStatus();
+    const events = await this.eventRepository.getByOpenStatus();
+
+    const newEvents = [];
+
+    for (const event of events) {
+      const frequencyList = await this.frequencyRepository.findByEventId(
+        event.id,
+      );
+
+      newEvents.push({ ...event, usersList: frequencyList?.usersList || [] });
+    }
+
+    return newEvents;
   }
 
   async getInProgressEvents() {
