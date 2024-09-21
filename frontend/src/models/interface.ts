@@ -4,6 +4,7 @@ export interface User {
     email?: string
     password: string;
     type: number
+    
 }
 
 export interface AuthContextProps {
@@ -11,7 +12,9 @@ export interface AuthContextProps {
     user: User | null;
     login: (password: string) => boolean;
     logout: () => void;
+    token: string | null; 
 }
+
 
 
 export interface AuthProviderProps {
