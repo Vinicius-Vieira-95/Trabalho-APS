@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { EventRepository } from '@/domain/repositories/event.repository';
 import { TokenAdapter } from '@/infra/adapters/token.adapter';
 import { InvalidParamError } from '@/presentation/errors';
@@ -101,5 +106,56 @@ export class EventService {
       status: 'FINISHED',
       id: eventId,
     });
+  }
+
+  async registerUserInEvent({
+    eventId,
+    userId,
+  }: {
+    eventId: string;
+    userId: string;
+  }) {
+    const user = await this.userRepository.findById(userId);
+
+    if (user.type !== 'STUDENT') {
+      throw new HttpException(
+        'Only students can be registered in an event',
+        HttpStatus.EXPECTATION_FAILED,
+      );
+    }
+
+    let frequencyList = await this.frequencyRepository.findByEventId(eventId);
+
+    if (!frequencyList) {
+      const event = await this.eventRepository.findById(eventId);
+
+      if (!event) {
+        throw new NotFoundException('Evento não encontrado');
+      }
+
+      frequencyList = await this.frequencyRepository.createFrequencyList({
+        eventId,
+        teacherId: event.userId,
+        usersList: [],
+      });
+    }
+
+    let usersList = [...frequencyList.usersList];
+
+    if (usersList.find((value) => value.userId === userId)) {
+      usersList = usersList.filter((value) => value.userId !== userId);
+    } else {
+      usersList = [...usersList, { attended: false, userId }];
+    }
+    const newFrequencyList = { ...frequencyList, usersList: [...usersList] };
+
+    const id = newFrequencyList.id;
+
+    delete newFrequencyList.id;
+
+    return await this.frequencyRepository.saveFrequencyList(
+      id,
+      newFrequencyList,
+    );
   }
 }
