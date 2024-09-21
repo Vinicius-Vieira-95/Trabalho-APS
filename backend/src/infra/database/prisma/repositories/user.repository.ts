@@ -6,6 +6,13 @@ import { User } from '@prisma/client';
 @Injectable()
 export class PrismaUserRepository implements UserRepository {
   constructor(private prisma: PrismaService) {}
+  async findByEmail(email: string): Promise<User> {
+    return await this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+  }
 
   async findById(userId: string): Promise<User> {
     const user = await this.prisma.user.findUnique({
