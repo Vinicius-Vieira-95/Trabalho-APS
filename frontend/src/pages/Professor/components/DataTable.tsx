@@ -12,10 +12,10 @@ import {
     TablePagination,
     Chip,
 } from "@mui/material";
-import {CustomButton} from './custom_style/style';
+import { CustomButton } from './custom_style/style';
 import { useState } from "react";
 
-const mockTabelaEventosAluno = [
+const mockTabelaEventos = [
     {
         evento: "Prova de Matemática",
         descricao: "Prova sobre álgebra e geometria.",
@@ -31,6 +31,11 @@ const mockTabelaEventosAluno = [
         descricao: "Exposição de projetos de tecnologia.",
         categoria: "Feira"
     },
+    {
+        evento: "Feira de Tecnologia",
+        descricao: "Exposição de projetos de tecnologia.",
+        categoria: "Feira"
+    }
 ];
 
 type Order = "asc" | "desc";
@@ -65,7 +70,7 @@ function DataTable() {
         setPage(0);
     };
 
-    const sortedEventos = mockTabelaEventosAluno.sort((a, b) => {
+    const sortedEventos = mockTabelaEventos.sort((a, b) => {
         if (orderBy === "evento") {
             return order === "asc"
                 ? a.evento.localeCompare(b.evento)
@@ -90,7 +95,7 @@ function DataTable() {
     return (
         <Box>
             <Typography
-                sx={{ flex: "1 1 100%", fontSize: "2rem", paddingBottom: "5rem" }}
+                sx={{ flex: "1 1 100%", fontSize: "2rem", paddingBottom: "5rem" , fontWeight: 'bold', marginTop: '2rem'}}
                 variant="h6"
                 id="tableTitle"
                 component="div"
@@ -102,7 +107,7 @@ function DataTable() {
                     <TableHead>
 
                         <TableRow sx={{ alignItems: 'center' }}>
-                            <TableCell sx={{ textAlign: 'center', fontWeight: 'bold' }}>
+                            <TableCell sx={{ fontWeight: 'bold' }}>
                                 <TableSortLabel
                                     active={orderBy === "evento"}
                                     direction={orderBy === "evento" ? order : "asc"}
@@ -111,7 +116,7 @@ function DataTable() {
                                     Evento
                                 </TableSortLabel>
                             </TableCell>
-                            <TableCell sx={{ textAlign: 'center', fontWeight: 'bold' }}>
+                            <TableCell sx={{ fontWeight: 'bold' }}>
                                 <TableSortLabel
                                     active={orderBy === "descricao"}
                                     direction={orderBy === "descricao" ? order : "asc"}
@@ -133,17 +138,17 @@ function DataTable() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {mockTabelaEventosAluno.map((evento, index) => (
+                        {paginatedEventos.map((evento, index) => (
                             <TableRow key={index}>
-                                <TableCell sx={{ textAlign: 'center' }}>{evento.evento}</TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}>{evento.descricao}</TableCell>
+                                <TableCell >{evento.evento}</TableCell>
+                                <TableCell >{evento.descricao}</TableCell>
                                 <TableCell sx={{ textAlign: 'center' }}>
                                     <Chip
                                         label={evento.categoria}
                                         sx={{ backgroundColor: "#DAF8E6", color: "#1A8245" }}
                                     />
                                 </TableCell>
-                                <TableCell  sx={{ textAlign: 'center' }}>
+                                <TableCell sx={{ textAlign: 'center' }}>
                                     <CustomButton sx={{ border: '2px solid #007AFF', color: '#007AFF' }}>
                                         Editar
                                     </CustomButton>
@@ -157,7 +162,7 @@ function DataTable() {
                 </Table>
                 <TablePagination
                     sx={{ display: "flex", justifyContent: "flex-end" }}
-                    count={mockTabelaEventosAluno.length}
+                    count={mockTabelaEventos.length}
                     page={page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
