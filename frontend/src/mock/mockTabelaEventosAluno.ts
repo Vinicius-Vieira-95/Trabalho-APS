@@ -35,6 +35,31 @@ interface Evento {
       descricao: "Regional Paradigm Technician Optimization...",
       categoria: "Acadêmica/Geral",
     },
+    {
+      evento: "Multidisciplinary Web Entrepreneur Developer",
+      descricao: "Multidisciplinary Web Entrepreneur Developer...",
+      categoria: "Acadêmica/Geral",
+    },
+    {
+      evento: "Multidisciplinary Web Entrepreneur Developer",
+      descricao: "Multidisciplinary Web Entrepreneur Developer...",
+      categoria: "Acadêmica/Geral",
+    },
+    {
+      evento: "Multidisciplinary Web Entrepreneur Developer",
+      descricao: "Multidisciplinary Web Entrepreneur Developer...",
+      categoria: "Acadêmica/Geral",
+    },
+    {
+      evento: "Multidisciplinary Web Entrepreneur Developer",
+      descricao: "Multidisciplinary Web Entrepreneur Developer...",
+      categoria: "Acadêmica/Geral",
+    },
+    {
+      evento: "Multidisciplinary Web Entrepreneur Developer",
+      descricao: "Multidisciplinary Web Entrepreneur Developer...",
+      categoria: "Acadêmica/Geral",
+    },
   ];
   
 
