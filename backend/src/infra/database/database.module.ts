@@ -5,6 +5,8 @@ import { PrismaUserRepository } from '@/infra/database/prisma/repositories/user.
 import { UserRepository } from '@/domain/repositories/user.repository';
 import { EventRepository } from '@/domain/repositories/event.repository';
 import { PrismaEventRepository } from '@/infra/database/prisma/repositories/event.repository';
+import { PrismaFrequencyRepository } from '@/infra/database/prisma/repositories/frequency.repository';
+import { FrequencyRepository } from '@/domain/repositories/frequency.repository';
 
 @Module({
   providers: [
@@ -17,7 +19,16 @@ import { PrismaEventRepository } from '@/infra/database/prisma/repositories/even
       provide: EventRepository,
       useClass: PrismaEventRepository,
     },
+    {
+      provide: FrequencyRepository,
+      useClass: PrismaFrequencyRepository,
+    },
   ],
-  exports: [UserRepository, EventRepository, PrismaService],
+  exports: [
+    UserRepository,
+    FrequencyRepository,
+    EventRepository,
+    PrismaService,
+  ],
 })
 export class DatabaseModule {}

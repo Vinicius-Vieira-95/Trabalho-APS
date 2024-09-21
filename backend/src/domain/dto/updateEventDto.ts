@@ -1,11 +1,18 @@
-import { IsBoolean, IsDate, IsNotEmpty, IsString } from 'class-validator';
+import { EventStatus } from '@prisma/client';
+import {
+  IsBoolean,
+  IsDate,
+  IsEnum,
+  IsNotEmpty,
+  IsString,
+} from 'class-validator';
 
 export interface IUpdateEventDto {
   name: string;
   description: string;
   startDate: Date;
   endDate: Date;
-  status: string;
+  status: EventStatus;
   autoFrequency: boolean;
 }
 
@@ -27,8 +34,8 @@ export class UpdateEventDto {
   endDate: Date;
 
   @IsNotEmpty()
-  @IsString()
-  status: string;
+  @IsEnum(EventStatus)
+  status: EventStatus;
 
   @IsNotEmpty()
   @IsBoolean()
