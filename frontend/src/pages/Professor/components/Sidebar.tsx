@@ -9,7 +9,7 @@ const Sidebar = () => {
 
   useEffect(() => {  
     setOpenEvents(true);  
-    setActiveItem("evento2");  
+    setActiveItem("evento3");  
   }, []); 
 
   const toggleEvents = () => {  
