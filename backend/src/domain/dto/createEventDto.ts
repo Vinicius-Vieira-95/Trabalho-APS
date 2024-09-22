@@ -9,15 +9,12 @@ import {
 export interface ICreateEventDto {
   name: string;
   description: string;
-  id: string;
   userId: string;
   activityId: string;
   startDate: Date;
   status: string;
   endDate: Date;
   autoFrequency: boolean;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export class CreateEventDto {
