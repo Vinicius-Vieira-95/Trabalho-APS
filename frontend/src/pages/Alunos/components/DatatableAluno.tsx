@@ -60,21 +60,23 @@ const DatatableAluno = () => {
   };
 
   const sortedEventos = [...eventos].sort((a, b) => {
-    if (orderBy === "name") {
-      return order === "asc"
-        ? a.name.localeCompare(b.name)
-        : b.name.localeCompare(a.name);
-    } else if (orderBy === "description") {
-      return order === "asc"
-        ? a.description.localeCompare(b.description)
-        : b.description.localeCompare(a.description);
-    } else if (orderBy === "status") {
-      return order === "asc"
-        ? a.status.localeCompare(b.status)
-        : b.status.localeCompare(a.status);
+    const fields = ["name", "description", "status"];
+  
+    if (fields.includes(orderBy)) {
+      const aValue = a[orderBy];
+      const bValue = b[orderBy];
+  
+      if (typeof aValue === "string" && typeof bValue === "string") {
+        const comparison = aValue.localeCompare(bValue);
+        return order === "asc" ? comparison : -comparison;
+      }
+      if (aValue > bValue) return order === "asc" ? 1 : -1;
+      if (aValue < bValue) return order === "asc" ? -1 : 1;
     }
+  
     return 0;
   });
+  
 
   const paginatedEventos = sortedEventos.slice(
     page * rowsPerPage,
