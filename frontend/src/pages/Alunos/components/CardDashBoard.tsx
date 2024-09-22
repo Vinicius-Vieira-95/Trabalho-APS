@@ -26,6 +26,7 @@ const CardDashBoard = () => {
       progress: 80,
       image: Image,
     },
+    
   ];
 
   return (
@@ -38,15 +39,16 @@ const CardDashBoard = () => {
           <Box className="bg-green-600 p-2 rounded-md h-[2.7rem] w-[2.5rem]">
             <AccessTimeIcon className="text-white" />
           </Box>
-          <Typography variant="h6" className="font-bold text-green-900 ml-2">
+          <Typography variant="h6" className="font-bold text-green-900 ml-2" sx={{ fontWeight: "bold" }}>
             Horas totais concluídas
           </Typography>
         </Box>
 
         <Typography
-          sx={{ marginLeft: "3rem", marginBottom: "2rem" }}
+          sx={{ marginLeft: "3rem", marginBottom: "2rem", fontWeight:'bold' }}
           variant="body1"
           className="text-green-700 font-semibold mt-2"
+          
         >
           {totalHours.completed} horas de {totalHours.target} horas.
         </Typography>
@@ -69,7 +71,7 @@ const CardDashBoard = () => {
         </Typography>
       </Paper>
 
-      <Box className="grid grid-cols-1 md:grid-cols-2 gap-[10rem] w-full max-w-6xl">
+      <Box className="grid grid-cols-1 md:grid-cols-2 gap-[4rem] w-full max-w-6xl">
         {cards.map((card, index) => (
           <Paper
             key={index}
