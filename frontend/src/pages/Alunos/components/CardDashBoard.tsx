@@ -61,7 +61,7 @@ const CardDashBoard = () => {
         </Box>
 
         <Typography
-          sx={{ marginLeft: "3rem", marginBottom: "2rem", fontWeight:'bold' }}
+          sx={{ marginLeft: "3.2rem", marginBottom: "2rem", fontWeight:'bold' }}
           variant="body1"
           className="text-green-700 font-semibold mt-2"
           
