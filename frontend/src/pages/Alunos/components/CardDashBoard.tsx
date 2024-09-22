@@ -35,7 +35,7 @@ const CardDashBoard = () => {
         sx={{ backgroundColor: "#E6F7E9" }}
       >
         <Box className="flex items-center gap-2">
-          <Box className="bg-green-600 p-2 rounded-md h-[2.7rem] w-auto">
+          <Box className="bg-green-600 p-2 rounded-md h-[2.7rem] w-[2.5rem]">
             <AccessTimeIcon className="text-white" />
           </Box>
           <Typography variant="h6" className="font-bold text-green-900 ml-2">
