@@ -5,19 +5,22 @@ import { AuthContext } from '../hook/useAuth';
 
 export function AuthProvider({ children }: AuthProviderProps) {  
     const [user, setUser] = useState<User | null>(null);  
+    const [token, setToken] = useState<string | null>(null); 
 
-    const login = (token: string) => {  
-        
-        const validarUser: User | undefined = mockUsers.find((item) => token === item.password);  
+
+    const login = (inputToken: string) => {  
+        const validarUser: User | undefined = mockUsers.find((item) => inputToken === item.password);  
         if (validarUser) {  
-            setUser(validarUser); 
+            setUser(validarUser);  
+            setToken(inputToken); 
             return true;  
         }  
         return false; 
     }  
 
     const logout = () => {  
-        setUser(null); 
+        setUser(null);  
+        setToken(null); 
     }  
 
     const isAuthenticated = () => {  
@@ -26,6 +29,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     const value: AuthContextProps = {  
         user,  
+        token,
         login,  
         logout,  
         isAuthenticated  

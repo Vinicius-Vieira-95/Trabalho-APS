@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { EventRepository } from '@/domain/repositories/event.repository';
+import { ICreateEventDto } from '@/domain/dto/createEventDto';
 import { TokenAdapter } from '@/infra/adapters/token.adapter';
 import { InvalidParamError } from '@/presentation/errors';
 import { UserRepository } from '@/domain/repositories/user.repository';
@@ -16,6 +17,10 @@ export class EventService {
 
   async getOpenEvents() {
     return await this.eventRepository.getByOpenStatus();
+  }
+
+  async create(data: ICreateEventDto) {
+    return await this.eventRepository.create(data);
   }
 
   async getInProgressEvents() {

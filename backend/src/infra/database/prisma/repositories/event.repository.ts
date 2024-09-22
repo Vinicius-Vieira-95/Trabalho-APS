@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { EventRepository } from '@/domain/repositories/event.repository';
+import { ICreateEventDto } from '@/domain/dto/createEventDto';
 import { Event, EventStatus } from '@prisma/client';
 
 @Injectable()
@@ -36,6 +37,12 @@ export class PrismaEventRepository implements EventRepository {
       where: {
         status: 'IN_PROGRESS',
       },
+    });
+  }
+
+  async create(data: ICreateEventDto): Promise<Event> {
+    return await this.prisma.event.create({
+      data,
     });
   }
 
