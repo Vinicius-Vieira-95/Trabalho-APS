@@ -59,13 +59,13 @@ const DatatableAluno = () => {
     setPage(0);
   };
 
-  const sortedEventos = [...eventos].sort((a, b) => {
-    const fields = ["name", "description", "status"];
-  
-    if (fields.includes(orderBy)) {
+  const sortedEvents = [...eventos].sort((a, b) => {
+    const sortableFields = ["name", "description", "status"];
+    
+    if (sortableFields.includes(orderBy)) {
       const aValue = a[orderBy];
       const bValue = b[orderBy];
-  
+    
       if (typeof aValue === "string" && typeof bValue === "string") {
         const comparison = aValue.localeCompare(bValue);
         return order === "asc" ? comparison : -comparison;
@@ -73,12 +73,13 @@ const DatatableAluno = () => {
       if (aValue > bValue) return order === "asc" ? 1 : -1;
       if (aValue < bValue) return order === "asc" ? -1 : 1;
     }
-  
+    
     return 0;
   });
   
+  
 
-  const paginatedEventos = sortedEventos.slice(
+  const paginatedEventos = sortedEvents.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
