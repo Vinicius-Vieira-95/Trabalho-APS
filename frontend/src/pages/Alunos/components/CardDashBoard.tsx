@@ -26,6 +26,22 @@ const CardDashBoard = () => {
       progress: 80,
       image: Image,
     },
+    {
+        title: "Acadêmica / Ensino",
+        description: "Cursos de língua estrangeira – mínimo três semestres",
+        maxHours: 60,
+        currentHours: 48,
+        progress: 80,
+        image: Image,
+      },
+      {
+        title: "Acadêmica / Pesquisa e Produção Científica",
+        description: "Apresentação de trabalhos na Semana Universitária – painel",
+        maxHours: 48,
+        currentHours: 48,
+        progress: 80,
+        image: Image,
+      },
     
   ];
 
@@ -71,7 +87,7 @@ const CardDashBoard = () => {
         </Typography>
       </Paper>
 
-      <Box className="grid grid-cols-1 md:grid-cols-2 gap-[4rem] w-full max-w-6xl">
+      <Box className="grid grid-cols-1 md:grid-cols-2 gap-[3rem] w-full max-w-6xl">
         {cards.map((card, index) => (
           <Paper
             key={index}
