@@ -15,28 +15,34 @@ import {
 import { CustomButton } from './custom_style/style';
 import { useState } from "react";
 
-const mockTabelaEventos = [
-    {
-        evento: "Prova de Matemática",
-        descricao: "Prova sobre álgebra e geometria.",
-        categoria: "Avaliação"
-    },
-    {
-        evento: "Seminário de Ciências",
-        descricao: "Apresentação sobre biologia molecular.",
-        categoria: "Seminário"
-    },
-    {
-        evento: "Feira de Tecnologia",
-        descricao: "Exposição de projetos de tecnologia.",
-        categoria: "Feira"
-    },
-    {
-        evento: "Feira de Tecnologia",
-        descricao: "Exposição de projetos de tecnologia.",
-        categoria: "Feira"
-    }
-];
+const user = {
+    id: 2,
+    name: "Jane Smith",
+    email: "jane@professor.uece.com",
+    type: 1,
+    eventos: [
+        {
+            evento: "Prova de Matemática",
+            descricao: "Prova sobre álgebra e geometria.",
+            categoria: "Avaliação"
+        },
+        {
+            evento: "Seminário de Ciências",
+            descricao: "Apresentação sobre biologia molecular.",
+            categoria: "Seminário"
+        },
+        {
+            evento: "Feira de Tecnologia",
+            descricao: "Exposição de projetos de tecnologia.",
+            categoria: "Feira"
+        },
+        {
+            evento: "Feira de Tecnologia",
+            descricao: "Exposição de projetos de tecnologia.",
+            categoria: "Feira"
+        }
+    ]
+}
 
 type Order = "asc" | "desc";
 
@@ -70,7 +76,7 @@ function DataTable() {
         setPage(0);
     };
 
-    const sortedEventos = mockTabelaEventos.sort((a, b) => {
+    const sortedEventos = user.eventos.sort((a, b) => {
         if (orderBy === "evento") {
             return order === "asc"
                 ? a.evento.localeCompare(b.evento)
@@ -95,7 +101,7 @@ function DataTable() {
     return (
         <Box>
             <Typography
-                sx={{ flex: "1 1 100%", fontSize: "2rem", paddingBottom: "5rem" , fontWeight: 'bold', marginTop: '2rem'}}
+                sx={{ flex: "1 1 100%", fontSize: "2rem", paddingBottom: "5rem", fontWeight: 'bold', marginTop: '2rem' }}
                 variant="h6"
                 id="tableTitle"
                 component="div"
@@ -106,7 +112,7 @@ function DataTable() {
                 <Table aria-label="simple table">
                     <TableHead>
 
-                        <TableRow sx={{ alignItems: 'center' }}>
+                        <TableRow sx={{ alignItems: 'center'}}>
                             <TableCell sx={{ fontWeight: 'bold' }}>
                                 <TableSortLabel
                                     active={orderBy === "evento"}
@@ -148,8 +154,8 @@ function DataTable() {
                                         sx={{ backgroundColor: "#DAF8E6", color: "#1A8245" }}
                                     />
                                 </TableCell>
-                                <TableCell sx={{ textAlign: 'center' }}>
-                                    <CustomButton sx={{ border: '2px solid #007AFF', color: '#007AFF' }}>
+                                <TableCell sx={{ textAlign: 'center'}}>
+                                    <CustomButton sx={{ border: '2px solid #007AFF', color: '#007AFF', marginRight: '1rem'}}>
                                         Editar
                                     </CustomButton>
                                     <CustomButton sx={{ border: '2px solid #FF3B30', color: '#FF3B30' }}>
@@ -162,7 +168,7 @@ function DataTable() {
                 </Table>
                 <TablePagination
                     sx={{ display: "flex", justifyContent: "flex-end" }}
-                    count={mockTabelaEventos.length}
+                    count={user.eventos.length}
                     page={page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
