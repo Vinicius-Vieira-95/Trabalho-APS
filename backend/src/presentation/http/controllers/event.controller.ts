@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+import { CreateEventDto } from '@/domain/dto/createEventDto';
 import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
 import { EventService } from '@/application/event/event.service';
 import { handleError, ok } from '@/presentation/http/helpers/http.helper';
@@ -84,6 +86,17 @@ export class EventController {
         .send(ok(await this.eventsService.findFrequencyListFromEvent(eventId)));
     } catch (error) {
       return response.status(error.status).send(handleError(error));
+    }
+  }
+
+  @Post()
+  async create(@Body() body: CreateEventDto, @Res() response: Response) {
+    try {
+      const createdEvent = await this.eventsService.create(body);
+
+      return response.status(201).send(createdEvent);
+    } catch (error) {
+      return response.status(error.status).send(error);
     }
   }
 }
