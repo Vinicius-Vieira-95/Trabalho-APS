@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";  
 import { useAuth } from "../../../hook/useAuth";  
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {  
   const [openEvents, setOpenEvents] = useState(true);  
@@ -97,8 +98,8 @@ const Sidebar = () => {
                 </a>  
               </li>  
               <li>  
-                <a  
-                  href="#"  
+                <Link  
+                  to="/"  
                   className={`flex items-center p-2 rounded-lg ${  
                     activeItem === "evento3"  
                       ? "text-green-600"  
@@ -107,7 +108,7 @@ const Sidebar = () => {
                   onClick={() => handleItemClick("evento3")}  
                 >  
                   Em Aberto  
-                </a>  
+                </Link>  
               </li>
               <li>  
                 <a  
@@ -128,11 +129,11 @@ const Sidebar = () => {
       </div>  
 
     
-      <div className="flex items-center mb-4 ml-2">  
+      <div className="flex items-center mb-4 ml-1">  
         <img  
           src="../../../../img/icon/avatar.png"  
           alt="Avatar"  
-          className="rounded-full mr-1 w-12 h-12"  
+          className="rounded-full  w-12 h-12"  
         />  
         <div>  
           <p className="font-semibold">{user?.name}</p>  
