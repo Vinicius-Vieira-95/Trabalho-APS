@@ -5,14 +5,15 @@ import { AuthContext } from '../hook/useAuth';
 
 export function AuthProvider({ children }: AuthProviderProps) {  
     const [user, setUser] = useState<User | null>(null);  
-    const [token, setToken] = useState<string | null>(null); 
+    const [token, setToken] = useState<string | null>(null);  
 
-
-    const login = (inputToken: string) => {  
-        const validarUser: User | undefined = mockUsers.find((item) => inputToken === item.password);  
+   
+    const login = (email: string, password: string) => {  
+       
+        const validarUser: User | undefined = mockUsers.find((item) => email === item.email && password === item.password);  
         if (validarUser) {  
             setUser(validarUser);  
-            setToken(inputToken); 
+            setToken(password); 
             return true;  
         }  
         return false; 
