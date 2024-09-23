@@ -11,6 +11,7 @@ import { TokenAdapter } from '@/infra/adapters/token.adapter';
 import { InvalidParamError } from '@/presentation/errors';
 import { UserRepository } from '@/domain/repositories/user.repository';
 import { FrequencyRepository } from '@/domain/repositories/frequency.repository';
+import { EventStatus } from '@prisma/client';
 
 @Injectable()
 export class EventService {
@@ -43,6 +44,13 @@ export class EventService {
 
   async getInProgressEvents() {
     return await this.eventRepository.getByInProgressStatus();
+  }
+
+  async getFinishedEvents(status: EventStatus) {
+    if (status !== EventStatus.FINISHED) {
+      throw new InvalidParamError('Status inválido');
+    }
+    return await this.eventRepository.getByStatus(status);
   }
 
   async generateAttendanceSignatureToken({

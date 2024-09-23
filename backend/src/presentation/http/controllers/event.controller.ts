@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Res,
 } from '@nestjs/common';
 import { CreateEventDto } from '@/domain/dto/createEventDto';
@@ -18,6 +19,7 @@ import {
   ValidateSignatureDto,
 } from '@/domain/dtos/attendance-signature-dto';
 import { UpdateEventDto } from '@/domain/dto/updateEventDto';
+import { EventStatus } from '@prisma/client';
 
 @Controller('events')
 export class EventController {
@@ -40,6 +42,20 @@ export class EventController {
       return response
         .status(200)
         .send(ok(await this.eventsService.getInProgressEvents()));
+    } catch (error) {
+      return response.status(error.status).send(handleError(error));
+    }
+  }
+
+  @Get('finished')
+  async getFinishedEvents(
+    @Res() response: Response,
+    @Query('status') status: EventStatus,
+  ) {
+    try {
+      return response
+        .status(200)
+        .send(ok(await this.eventsService.getFinishedEvents(status)));
     } catch (error) {
       return response.status(error.status).send(handleError(error));
     }

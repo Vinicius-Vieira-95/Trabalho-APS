@@ -42,6 +42,14 @@ export class PrismaEventRepository implements EventRepository {
     });
   }
 
+  async getByStatus(status: EventStatus): Promise<Event[]> {
+    return await this.prisma.event.findMany({
+      where: {
+        status,
+      },
+    });
+  }
+
   async create(data: ICreateEventDto): Promise<Event> {
     return await this.prisma.event.create({
       data,
@@ -78,5 +86,6 @@ export class PrismaEventRepository implements EventRepository {
       await this.prisma.event.delete({ where: { id } });
     } catch (error) {
       throw new NotFoundException('Event not found');
-    }}
+    }
+  }
 }
