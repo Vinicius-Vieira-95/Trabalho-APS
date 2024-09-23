@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { EventRepository } from '@/domain/repositories/event.repository';
+import { IUpdateEventDto } from '@/domain/dto/updateEventDto';
 import { ICreateEventDto } from '@/domain/dto/createEventDto';
 import { TokenAdapter } from '@/infra/adapters/token.adapter';
 import { InvalidParamError } from '@/presentation/errors';
@@ -106,5 +107,13 @@ export class EventService {
       status: 'FINISHED',
       id: eventId,
     });
+  }
+
+  async updateEvent(id: string, data: IUpdateEventDto) {
+    return await this.eventRepository.updateEvent(id, data);
+  }
+
+  async deleteEvent(id: string) {
+    return await this.eventRepository.deleteEvent(id);
   }
 }

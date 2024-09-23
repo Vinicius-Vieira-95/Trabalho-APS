@@ -1,4 +1,6 @@
+/* eslint-disable prettier/prettier */
 import { Event, EventStatus } from '@prisma/client';
+import { IUpdateEventDto } from '../dto/updateEventDto';
 import { ICreateEventDto } from '../dto/createEventDto';
 
 export abstract class EventRepository {
@@ -13,4 +15,6 @@ export abstract class EventRepository {
     id: string;
     status: EventStatus;
   }): Promise<Event>;
+  abstract updateEvent(id: string, data: IUpdateEventDto): Promise<Event>;
+  abstract deleteEvent(id: string): Promise<void>;
 }
