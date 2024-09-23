@@ -26,10 +26,11 @@ const Sidebar = () => {
 
   return (  
     <aside  
-      id="default-sidebar"  
-      className="w-64 min-h-screen bg-white shadow-md border border-gray-100 flex flex-col"  
-      aria-label="Sidebar"  
-    >  
+    id="default-sidebar"  
+    className="w-64 h-screen fixed bg-white shadow-md border border-gray-100 flex flex-col"  
+    aria-label="Sidebar"  
+  >
+   
       <div className="flex-grow px-3 py-4 overflow-y-auto">  
         <ul className="ml-4 space-y-2">  
           <li>  
