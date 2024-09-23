@@ -5,6 +5,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { EventRepository } from '@/domain/repositories/event.repository';
+import { IUpdateEventDto } from '@/domain/dto/updateEventDto';
+import { ICreateEventDto } from '@/domain/dto/createEventDto';
 import { TokenAdapter } from '@/infra/adapters/token.adapter';
 import { InvalidParamError } from '@/presentation/errors';
 import { UserRepository } from '@/domain/repositories/user.repository';
@@ -33,6 +35,10 @@ export class EventService {
     }
 
     return newEvents;
+  }
+
+  async create(data: ICreateEventDto) {
+    return await this.eventRepository.create(data);
   }
 
   async getInProgressEvents() {
@@ -169,5 +175,13 @@ export class EventService {
       id,
       newFrequencyList,
     );
+  }
+
+  async updateEvent(id: string, data: IUpdateEventDto) {
+    return await this.eventRepository.updateEvent(id, data);
+  }
+
+  async deleteEvent(id: string) {
+    return await this.eventRepository.deleteEvent(id);
   }
 }

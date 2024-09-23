@@ -25,3 +25,4 @@ backend/local-dev/mongodb/volumes/
 *.njsproj
 *.sln
 *.sw?
+.env
