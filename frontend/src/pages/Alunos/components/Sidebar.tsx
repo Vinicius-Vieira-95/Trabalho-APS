@@ -11,15 +11,14 @@ const Sidebar = () => {
   const location = useLocation();  
 
   useEffect(() => {  
-    
     if (location.pathname === "/dashboard") {  
       setActiveItem("dashboard");  
     } else if (location.pathname === "/alunos") {  
       setActiveItem("evento2");  
     } else {  
-      setActiveItem("evento1"); 
+      setActiveItem("evento1");  
     }  
-  }, [location.pathname]);
+  }, [location.pathname]);  
 
   const toggleEvents = () => {  
     setOpenEvents((prev) => !prev);  
@@ -28,7 +27,7 @@ const Sidebar = () => {
   return (  
     <aside  
       id="default-sidebar"  
-      className="w-64 h-screen bg-white shadow-md border border-gray-100 flex flex-col font-inter"  
+      className="w-64 min-h-screen bg-white shadow-md border border-gray-100 flex flex-col"  
       aria-label="Sidebar"  
     >  
       <div className="flex-grow px-3 py-4 overflow-y-auto">  
