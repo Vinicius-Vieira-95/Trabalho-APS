@@ -24,9 +24,9 @@ const CreateEvent = () => {
   return (
     <div className="flex">
       <Sidebar />
-      <div>
-        <div>
-          <h2>Criar evento</h2>
+      <div className="flex flex-col w-full justify-center items-center">
+        <div className="mb-10 items-start w-1/2 ml-20">
+          <h2 className="text-4xl mb-2">Criar evento</h2>
           <p>Preencha todas as informações sobre o evento abaixo.</p>
         </div>
 
@@ -36,63 +36,81 @@ const CreateEvent = () => {
               <div>
                 <input
                   type="text"
-                  placeholder="name"
+                  placeholder="Nome"
                   onChange={(e) =>
                     setFormValues((prev) => ({ ...prev, name: e.target.value }))
                   }
+                  className="mb-6 p-2 border-2 rounded-md border-gray-300 w-80"
                 />
                 <input
                   type="text"
-                  placeholder="activityId"
+                  placeholder="Categoria do evento"
                   onChange={(e) =>
                     setFormValues((prev) => ({
                       ...prev,
                       activityId: e.target.value,
                     }))
                   }
+                  className="ml-5 p-2 border-2 rounded-md border-gray-300 w-80"
                 />
               </div>
 
-              <div>
-                <input
-                  type="date"
-                  placeholder="date"
-                  onChange={(e) =>
-                    setFormValues((prev) => ({ ...prev, date: e.target.value }))
-                  }
-                />
-                <input
-                  type="time"
-                  placeholder="startDate"
-                  onChange={(e) =>
-                    setFormValues((prev) => ({
-                      ...prev,
-                      startDate: e.target.value,
-                    }))
-                  }
-                />
-                <input
-                  type="time"
-                  placeholder="endDate"
-                  onChange={(e) =>
-                    setFormValues((prev) => ({
-                      ...prev,
-                      endDate: e.target.value,
-                    }))
-                  }
-                />
+              <div className="flex mb-6">
+                <div className="flex flex-col">
+                  <label>Data do evento:</label>
+                  <input
+                    type="date"
+                    onChange={(e) =>
+                      setFormValues((prev) => ({
+                        ...prev,
+                        date: e.target.value,
+                      }))
+                    }
+                    className="p-2 border-2 rounded-md border-gray-300 w-52"
+                  />
+                </div>
+
+                <div className="flex flex-col ml-5">
+                  <label>Início:</label>
+                  <input
+                    type="time"
+                    placeholder="startDate"
+                    onChange={(e) =>
+                      setFormValues((prev) => ({
+                        ...prev,
+                        startDate: e.target.value,
+                      }))
+                    }
+                    className="p-2 border-2 rounded-md border-gray-300 w-52"
+                  />
+                </div>
+
+                <div className="flex flex-col ml-5">
+                  <label>Fim:</label>
+                  <input
+                    type="time"
+                    placeholder="endDate"
+                    onChange={(e) =>
+                      setFormValues((prev) => ({
+                        ...prev,
+                        endDate: e.target.value,
+                      }))
+                    }
+                    className="p-2 border-2 rounded-md border-gray-300 w-52"
+                  />
+                </div>
               </div>
 
               <div>
-                <input
-                  type="text"
-                  placeholder="description"
+                <textarea
+                  placeholder="Descrição do evento..."
                   onChange={(e) =>
                     setFormValues((prev) => ({
                       ...prev,
                       description: e.target.value,
                     }))
                   }
+                  className="p-2 border-2 rounded-md border-gray-300 w-full h-60"
                 />
               </div>
 
@@ -105,11 +123,18 @@ const CreateEvent = () => {
                       autoFrequency: e.target.checked,
                     }))
                   }
+                  className="accent-green-600"
                 />
+                <label className="ml-2">Lista de presença automática</label>
               </div>
 
-              <div>
-                <button type="submit">Criar</button>
+              <div className="mt-10 flex w-full justify-end">
+                <button
+                  type="submit"
+                  className="bg-green-600 text-white p-2 w-20 rounded-md"
+                >
+                  Criar
+                </button>
               </div>
             </div>
           </form>
