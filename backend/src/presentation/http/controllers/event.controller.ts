@@ -99,6 +99,14 @@ export class EventController {
     }
   }
 
+  @Post(':eventId/register-user/:userId')
+  async registerUserInEvent(
+    @Param('eventId') eventId: string,
+    @Param('userId') userId: string,
+  ) {
+    return await this.eventsService.registerUserInEvent({ eventId, userId });
+  }
+
   @Patch(':id')
   async updateEvent(@Body() body: UpdateEventDto, @Param('id') id: string) {
     return await this.eventsService.updateEvent(id, body);
