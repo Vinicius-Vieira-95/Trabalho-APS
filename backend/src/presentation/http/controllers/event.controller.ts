@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   Body,
   Controller,
@@ -8,6 +9,7 @@ import {
   Post,
   Res,
 } from '@nestjs/common';
+import { CreateEventDto } from '@/domain/dto/createEventDto';
 import { EventService } from '@/application/event/event.service';
 import { handleError, ok } from '@/presentation/http/helpers/http.helper';
 import { Response } from 'express';
@@ -107,5 +109,16 @@ export class EventController {
     await this.eventsService.deleteEvent(id);
 
     return response.status(204).send();
+  }
+
+  @Post()
+  async create(@Body() body: CreateEventDto, @Res() response: Response) {
+    try {
+      const createdEvent = await this.eventsService.create(body);
+
+      return response.status(201).send(createdEvent);
+    } catch (error) {
+      return response.status(error.status).send(error);
+    }
   }
 }
