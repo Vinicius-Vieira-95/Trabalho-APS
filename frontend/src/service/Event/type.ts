@@ -1,13 +1,11 @@
-
-
 export type Event = {
   id: string;
   userId: string;
   name: string;
   activityId: string;
-  startDate: Date;
+  startDate: string;
   status: string;
-  endDate: Date;
+  endDate: string;
   description: string;
   autoFrequency: boolean;
   createdAt: Date;
