@@ -113,6 +113,16 @@ export class EventController {
     return await this.eventsService.updateEvent(id, body);
   }
 
+  @Get(':id')
+  async findEvent(@Param('id') id: string) {
+    return await this.eventsService.findEventById(id);
+  }
+
+  @Get('/user/:userId')
+  async getEventsByUserId(@Param('userId') userId: string) {
+    return await this.eventsService.findEventsByUserId(userId);
+  }
+
   @Delete(':id')
   async deleteEvent(@Param('id') id: string, @Res() response: Response) {
     await this.eventsService.deleteEvent(id);

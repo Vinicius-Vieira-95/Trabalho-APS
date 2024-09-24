@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Sidebar from "./components/Sidebar";
 import { Event } from "../../service/Event/type";
-import createEvent from "../../service/Event/createEvent";
 import { mockUsers } from "../../mock/mockUsers";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import findEventById from "../../service/Event/findEventById";
+import editEvent from "../../service/Event/editEvent";
 
 const initialValues = {
   name: "",
@@ -17,8 +19,10 @@ const initialValues = {
   startDate: "",
 };
 
-const CreateEvent = () => {
+const UpdateEvent = () => {
   const navigate = useNavigate();
+
+  const { id } = useParams();
 
   const [formValues, setFormValues] = useState<
     Omit<Event, "id" | "status" | "createdAt" | "updatedAt" | "usersList"> & {
@@ -26,20 +30,20 @@ const CreateEvent = () => {
     }
   >(initialValues);
 
-  const handleCreateEvent = async (e: any) => {
+  const handleUpdateEvent = async (e: any) => {
     e.preventDefault();
 
     try {
-      const data = await createEvent({
+      const data = await editEvent(id!, {
         ...formValues,
       });
 
-      console.log("Criado: ", data);
+      console.log("Editado: ", data);
 
       setFormValues(initialValues);
       redirectToMainPage();
     } catch (error) {
-      console.error("Erro ao criar evento:", error);
+      console.error("Erro ao editar evento:", error);
     }
   };
 
@@ -47,17 +51,35 @@ const CreateEvent = () => {
     navigate(`/professor`);
   };
 
+  const fetchData = useCallback(async () => {
+    if (id) {
+      const data = await findEventById(id);
+      const {
+        createdAt,
+        updatedAt,
+        usersList,
+        id: eventId,
+        ...formData
+      } = data;
+      setFormValues({ ...formData });
+    }
+  }, [id]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
   return (
     <div className="flex">
       <Sidebar />
       <div className="flex flex-col w-full justify-center items-center">
         <div className="mb-10 items-start w-1/2 ml-20">
-          <h2 className="text-4xl mb-2">Criar evento</h2>
+          <h2 className="text-4xl mb-2">Editar evento</h2>
           <p>Preencha todas as informações sobre o evento abaixo.</p>
         </div>
 
         <div>
-          <form onSubmit={handleCreateEvent}>
+          <form onSubmit={handleUpdateEvent}>
             <div>
               <div>
                 <input
@@ -166,7 +188,7 @@ const CreateEvent = () => {
                   type="submit"
                   className="bg-green-600 text-white p-2 w-20 rounded-md"
                 >
-                  Criar
+                  Editar
                 </button>
               </div>
             </div>
@@ -177,4 +199,4 @@ const CreateEvent = () => {
   );
 };
 
-export default CreateEvent;
+export default UpdateEvent;

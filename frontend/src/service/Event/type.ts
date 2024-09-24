@@ -6,6 +6,7 @@ export type Event = {
   startDate: string;
   status: string;
   endDate: string;
+  date: string;
   usersList: { userId: string; attended: boolean }[];
   description: string;
   autoFrequency: boolean;
