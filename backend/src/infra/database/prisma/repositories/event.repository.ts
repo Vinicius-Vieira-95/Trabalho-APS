@@ -78,5 +78,6 @@ export class PrismaEventRepository implements EventRepository {
       await this.prisma.event.delete({ where: { id } });
     } catch (error) {
       throw new NotFoundException('Event not found');
-    }}
+    }
+  }
 }

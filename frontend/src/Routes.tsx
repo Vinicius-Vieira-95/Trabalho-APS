@@ -4,6 +4,9 @@ import AlunosPage from "./pages/Alunos/Alunos";
 import ProfessorPage from "./pages/Professor/Professor";
 import { useAuth } from "./hook/useAuth";
 import Dashboard from "./pages/Alunos/Dashboard";
+import { Role } from "./models/interface";
+import InProgressCourses from "./pages/Professor/InProgressCourses";
+import ConfirmPresence from "./pages/Alunos/ConfirmPresence";
 import CreateEvent from "./pages/Professor/CreateEvent";
 
 const AppRouter: React.FC = () => {
@@ -12,6 +15,8 @@ const AppRouter: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/frequencia" element={<ConfirmPresence />} />
+
         {/* Rotas públicas */}
         {!auth?.isAuthenticated() && (
           <>
@@ -23,15 +28,16 @@ const AppRouter: React.FC = () => {
         {/* Rotas protegidas */}
         {auth?.isAuthenticated() && (
           <>
-            {auth.user?.type === 0 && (
+            {auth.user?.type === Role.STUDENT && (
               <>
                 <Route path="/alunos" element={<AlunosPage />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="*" element={<Navigate to="/alunos" />} />
               </>
             )}
-            {auth.user?.type === 1 && (
+            {auth.user?.type === Role.TEACHER && (
               <>
+                <Route path="/em-andamento" element={<InProgressCourses />} />
                 <Route path="/professor" element={<ProfessorPage />} />
                 <Route path="/criar-evento" element={<CreateEvent />} />
                 <Route path="*" element={<Navigate to="/professor" />} />
