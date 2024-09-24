@@ -1,10 +1,9 @@
 export interface User {
-    id?: number;
-    name?:string;
-    email?: string
-    password: string;
-    type: number
-    
+  id?: string;
+  name?: string;
+  email?: string;
+  password: string;
+  type: number;
 }
 
 export interface AuthContextProps {
@@ -15,8 +14,6 @@ export interface AuthContextProps {
     token: string | null; 
 }
 
-
-
 export interface AuthProviderProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
