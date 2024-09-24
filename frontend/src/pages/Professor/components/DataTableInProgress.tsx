@@ -48,7 +48,7 @@ const DataTableInProgress = () => {
   const handleGenerateQRCode = async () => {
     if (!timeQRCodeOpened || !eventId) return;
     const token = (await PostTokenSignature(eventId, timeQRCodeOpened)).token;
-    setPresenceLink(`http://localhost:3000/frequencia?token=${token}`);
+    setPresenceLink(`http://localhost:5173/frequencia?token=${token}`);
     setEventIds([...(eventIds || []), eventId]);
     return;
   };

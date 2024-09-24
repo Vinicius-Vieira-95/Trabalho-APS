@@ -93,7 +93,7 @@ export class EventController {
   @Post('validate/attendance/:signatureToken')
   async validateAttendanceToken(
     @Res() response: Response,
-    @Param(':signatureToken') signatureToken: string,
+    @Param('signatureToken') signatureToken: string,
     @Body() validationProps: ValidateSignatureDto,
   ) {
     try {

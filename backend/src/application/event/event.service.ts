@@ -132,8 +132,6 @@ export class EventService {
   }
 
   async finishEvent(eventId: string) {
-    console.log('🟢🟢🟢🟢 eventIdaaa', eventId);
-
     return await this.eventRepository.updateStatusById({
       status: 'FINISHED',
       id: eventId,
