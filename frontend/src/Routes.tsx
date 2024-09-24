@@ -4,6 +4,7 @@ import AlunosPage from "./pages/Alunos/Alunos";
 import ProfessorPage from "./pages/Professor/Professor";
 import { useAuth } from "./hook/useAuth";
 import Dashboard from "./pages/Alunos/Dashboard";
+import CreateEvent from "./pages/Professor/CreateEvent";
 
 const AppRouter: React.FC = () => {
   const auth = useAuth();
@@ -32,6 +33,7 @@ const AppRouter: React.FC = () => {
             {auth.user?.type === 1 && (
               <>
                 <Route path="/professor" element={<ProfessorPage />} />
+                <Route path="/criar-evento" element={<CreateEvent />} />
                 <Route path="*" element={<Navigate to="/professor" />} />
               </>
             )}

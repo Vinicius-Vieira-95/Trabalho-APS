@@ -16,7 +16,7 @@ import { CustomButton } from './custom_style/style';
 import { useState } from "react";
 
 const user = {
-    id: 2,
+    id: '182c0e14-2b0c-4e99-8a6e-b0034ff1e68e',
     name: "Jane Smith",
     email: "jane@professor.uece.com",
     type: 1,
