@@ -65,7 +65,7 @@ export const ModalUnregisterEvent: FC<ModalEventsDetailsProps> = ({
           />
 
           <div>
-            <p style={{ color: "#637381" }}>Descrição do evento</p>
+            <p style={{ color: "#637381" }}>{data?.description}</p>
           </div>
 
           <div>
