@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Res } from '@nestjs/common';
+import { Controller, Get, Param, Post, Res } from '@nestjs/common';
 import { handleError, ok } from '@/presentation/http/helpers/http.helper';
 import { AuthRequired } from '@/application/shared/decorators/auth-required.decorator';
 import { RolesAllowed } from '@/application/shared/decorators/auth-roles-required.decorator';
@@ -21,5 +21,15 @@ export class UserController {
     } catch (error) {
       return response.status(error.status).send(handleError(error));
     }
+  }
+
+  @Post('/estudante')
+  async createStudent() {
+    return await this.userService.createStudentUser();
+  }
+
+  @Post('/professor')
+  async createTeacher() {
+    return await this.userService.createTeacherUser();
   }
 }
