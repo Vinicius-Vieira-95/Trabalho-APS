@@ -37,6 +37,7 @@ type props = {
 
 const DatatableAluno = ({ type }: props) => {
   const auth = useAuth();
+  console.log("type", type);
 
   const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState<keyof Event>("name");
@@ -54,7 +55,7 @@ const DatatableAluno = ({ type }: props) => {
   const [modalDetailsData, setModalDetailsData] = useState<{
     date: string;
     duration: string;
-    // hoursCounted: string;
+    description: string;
     present: string;
   }>();
 
@@ -93,7 +94,7 @@ const DatatableAluno = ({ type }: props) => {
     setModalDetailsData({
       // id: event.id,
       date: format(new Date(event.date), "dd/MM/yyyy"),
-      // description: event.description,
+      description: event.description,
       duration: event.startDate + " - " + event.endDate,
       // hoursCounted: "hoursCounted",
       present: present ? "Sim" : "Não",
@@ -117,7 +118,6 @@ const DatatableAluno = ({ type }: props) => {
   const fetchEventos = async (): Promise<void> => {
     try {
       let data;
-      console.log("type", type);
       if (type === EventType.OPEN) {
         data = await GetEventList();
       } else if (type === EventType.FINISHED) {
@@ -135,20 +135,6 @@ const DatatableAluno = ({ type }: props) => {
   };
 
   useEffect(() => {
-    const fetchEventos = async (): Promise<void> => {
-      try {
-        const data = await GetEventList();
-        console.log("Dados retornados:", data);
-        if (Array.isArray(data)) {
-          setEventos(data);
-        } else {
-          console.error("Dados retornados não são um array", data);
-        }
-      } catch (error) {
-        console.error("Erro ao buscar eventos:", error);
-      }
-    };
-
     fetchEventos();
   }, []);
 

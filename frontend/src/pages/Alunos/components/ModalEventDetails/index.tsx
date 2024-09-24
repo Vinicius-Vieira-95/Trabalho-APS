@@ -7,7 +7,7 @@ interface ModalEventsDetailsProps {
   data?: {
     date: string;
     duration: string;
-    // hoursCounted: string;
+    description: string;
     present: string;
   };
 }
@@ -63,7 +63,7 @@ export const ModalEventDetails: FC<ModalEventsDetailsProps> = ({
           />
 
           <div>
-            <p style={{ color: "#637381" }}>Descrição do evento</p>
+            <p style={{ color: "#637381" }}>{data?.description}</p>
           </div>
 
           <div>
