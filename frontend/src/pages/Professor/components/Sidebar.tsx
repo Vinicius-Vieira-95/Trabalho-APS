@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const [openEvents, setOpenEvents] = useState(true);
-  const [activeItem, setActiveItem] = useState("evento4");
+  const [activeItem, setActiveItem] = useState("evento3");
   const [hoveredEvents, setHoveredEvents] = useState(false);
   const { user } = useAuth() || {};
 
   useEffect(() => {
     setOpenEvents(true);
-    setActiveItem("evento4");
+    setActiveItem("evento3");
   }, []);
 
   const toggleEvents = () => {
@@ -71,8 +71,8 @@ const Sidebar = () => {
           {openEvents && (
             <ul className="ml-4 space-y-2">
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/criar-evento"
                   className={`flex items-center p-2 rounded-lg ${
                     activeItem === "evento1"
                       ? "text-green-600"
@@ -81,7 +81,7 @@ const Sidebar = () => {
                   onClick={() => handleItemClick("evento1")}
                 >
                   Criar novo evento
-                </a>
+                </Link>
               </li>
               <li>
                 <a
@@ -97,8 +97,8 @@ const Sidebar = () => {
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/"
                   className={`flex items-center p-2 rounded-lg ${
                     activeItem === "evento3"
                       ? "text-green-600"
@@ -107,9 +107,8 @@ const Sidebar = () => {
                   onClick={() => handleItemClick("evento3")}
                 >
                   Em Aberto
-                </a>
+                </Link>
               </li>
-
               <li>
                 <Link
                   to="/em-andamento"
@@ -128,11 +127,11 @@ const Sidebar = () => {
         </ul>
       </div>
 
-      <div className="flex items-center mb-4 ml-2">
+      <div className="flex items-center mb-4 ml-1">
         <img
           src="../../../../img/icon/avatar.png"
           alt="Avatar"
-          className="rounded-full mr-1 w-12 h-12"
+          className="rounded-full  w-12 h-12"
         />
         <div>
           <p className="font-semibold">{user?.name}</p>

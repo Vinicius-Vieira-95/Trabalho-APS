@@ -3,9 +3,9 @@ export type Event = {
   userId: string;
   name: string;
   activityId: string;
-  startDate: Date;
+  startDate: string;
   status: string;
-  endDate: Date;
+  endDate: string;
   usersList: { userId: string; attended: boolean }[];
   description: string;
   autoFrequency: boolean;

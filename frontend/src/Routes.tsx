@@ -7,6 +7,7 @@ import Dashboard from "./pages/Alunos/Dashboard";
 import { Role } from "./models/interface";
 import InProgressCourses from "./pages/Professor/InProgressCourses";
 import ConfirmPresence from "./pages/Alunos/ConfirmPresence";
+import CreateEvent from "./pages/Professor/CreateEvent";
 
 const AppRouter: React.FC = () => {
   const auth = useAuth();
@@ -38,6 +39,7 @@ const AppRouter: React.FC = () => {
               <>
                 <Route path="/em-andamento" element={<InProgressCourses />} />
                 <Route path="/professor" element={<ProfessorPage />} />
+                <Route path="/criar-evento" element={<CreateEvent />} />
                 <Route path="*" element={<Navigate to="/professor" />} />
               </>
             )}

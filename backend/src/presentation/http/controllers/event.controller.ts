@@ -18,6 +18,7 @@ import {
   ValidateSignatureDto,
 } from '@/domain/dtos/attendance-signature-dto';
 import { UpdateEventDto } from '@/domain/dto/updateEventDto';
+import { EventStatus } from '@prisma/client';
 
 @Controller('events')
 export class EventController {
@@ -147,7 +148,8 @@ export class EventController {
   @Post()
   async create(@Body() body: CreateEventDto, @Res() response: Response) {
     try {
-      const createdEvent = await this.eventsService.create(body);
+      const status = EventStatus.OPEN;
+      const createdEvent = await this.eventsService.create({ ...body, status });
 
       return response.status(201).send(createdEvent);
     } catch (error) {

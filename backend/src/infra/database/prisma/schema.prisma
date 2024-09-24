@@ -58,10 +58,11 @@ model Event {
   userId        String
   name          String   @unique
   activityId    String
-  startDate     DateTime
+  date          String
+  startDate     String
   status        EventStatus @default(OPEN)
   FrequencyList FrequencyList[] @relation(name: "Event")
-  endDate       DateTime
+  endDate       String
   description   String
   autoFrequency Boolean
   createdAt     DateTime @default(now())
