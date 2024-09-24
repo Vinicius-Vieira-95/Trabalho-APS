@@ -49,7 +49,7 @@ export class EventController {
   @Post('generate/token/attendance-signature/:eventId')
   async generateAttendanceToken(
     @Res() response: Response,
-    @Param(':eventId') eventId: string,
+    @Param('eventId') eventId: string,
     @Body() tokenProps: AttendanceSignatureDto,
   ) {
     try {
@@ -66,10 +66,35 @@ export class EventController {
     }
   }
 
+  @Get('presence-list/:eventId')
+  async getPresenceList(
+    @Res() response: Response,
+    @Param('eventId') eventId: string,
+  ) {
+    try {
+      return response
+        .status(200)
+        .send(ok(await this.eventsService.getPresenceList(eventId)));
+    } catch (error) {
+      return response.status(error.status).send(handleError(error));
+    }
+  }
+
+  @Post('finish/:eventId')
+  async finish(@Res() response: Response, @Param('eventId') eventId: string) {
+    try {
+      return response
+        .status(200)
+        .send(ok(await this.eventsService.finishEvent(eventId)));
+    } catch (error) {
+      return response.status(error.status).send(handleError(error));
+    }
+  }
+
   @Post('validate/attendance/:signatureToken')
   async validateAttendanceToken(
     @Res() response: Response,
-    @Param(':signatureToken') signatureToken: string,
+    @Param('signatureToken') signatureToken: string,
     @Body() validationProps: ValidateSignatureDto,
   ) {
     try {

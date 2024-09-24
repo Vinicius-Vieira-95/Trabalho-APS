@@ -91,6 +91,20 @@ const DatatableAluno = () => {
   };
 
   useEffect(() => {
+    const fetchEventos = async (): Promise<void> => {
+      try {
+        const data = await GetEventList();
+        console.log("Dados retornados:", data);
+        if (Array.isArray(data)) {
+          setEventos(data);
+        } else {
+          console.error("Dados retornados não são um array", data);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar eventos:", error);
+      }
+    };
+
     fetchEventos();
   }, []);
 

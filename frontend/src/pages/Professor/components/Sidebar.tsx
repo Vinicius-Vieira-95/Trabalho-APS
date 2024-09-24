@@ -109,6 +109,19 @@ const Sidebar = () => {
                   Em Aberto
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/em-andamento"
+                  className={`relative flex items-center font-inter text-TextSide p-2 rounded-lg ${
+                    activeItem === "evento4"
+                      ? "text-green-600"
+                      : "text-gray-900 hover:bg-gray-100"
+                  }`}
+                  onClick={() => handleItemClick("evento4")}
+                >
+                  Em Andamento
+                </Link>
+              </li>
             </ul>
           )}
         </ul>

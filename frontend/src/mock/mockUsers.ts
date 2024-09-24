@@ -1,16 +1,24 @@
+import { Role } from "../models/interface";
+
 export const mockUsers = [
   {
-    id: "66f1f518c18704962cc0774a",
+    id: "64f2d91c9fc13a45bcde0001",
     name: "John Doe",
-    email: "john@aluno.uece.com",
-    password: "147",
-    type: 0,
+    type: Role.STUDENT,
+    email: "johndoe@student.com",
+    registration: "20240001",
+    password: "123",
+    createdAt: "2024-09-23T00:00:00.000Z",
+    updatedAt: "2024-09-23T00:00:00.000Z",
   },
   {
-    id: "66f1f532c18704962cc0774b",
+    id: "64f2d91c9fc13a45bcde0002",
     name: "Jane Smith",
-    email: "jane@professor.uece.com",
-    password: "123",
-    type: 1,
+    type: Role.TEACHER,
+    email: "janesmith@teacher.com",
+    registration: "T20240001",
+    password: "1234",
+    createdAt: "2024-09-23T00:00:00.000Z",
+    updatedAt: "2024-09-23T00:00:00.000Z",
   },
 ];

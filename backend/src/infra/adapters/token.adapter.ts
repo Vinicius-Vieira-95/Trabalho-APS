@@ -11,7 +11,7 @@ export class TokenAdapter {
 
     return await new JwtService().signAsync(payload, {
       secret: secret,
-      expiresIn: expiresIn,
+      expiresIn: `${expiresIn}m`,
     });
   }
 
