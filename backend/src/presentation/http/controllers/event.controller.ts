@@ -1,6 +1,15 @@
 /* eslint-disable prettier/prettier */
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Res,
+} from '@nestjs/common';
 import { CreateEventDto } from '@/domain/dto/createEventDto';
-import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
 import { EventService } from '@/application/event/event.service';
 import { handleError, ok } from '@/presentation/http/helpers/http.helper';
 import { Response } from 'express';
@@ -8,6 +17,7 @@ import {
   AttendanceSignatureDto,
   ValidateSignatureDto,
 } from '@/domain/dtos/attendance-signature-dto';
+import { UpdateEventDto } from '@/domain/dto/updateEventDto';
 
 @Controller('events')
 export class EventController {
@@ -87,6 +97,26 @@ export class EventController {
     } catch (error) {
       return response.status(error.status).send(handleError(error));
     }
+  }
+
+  @Post(':eventId/register-user/:userId')
+  async registerUserInEvent(
+    @Param('eventId') eventId: string,
+    @Param('userId') userId: string,
+  ) {
+    return await this.eventsService.registerUserInEvent({ eventId, userId });
+  }
+
+  @Patch(':id')
+  async updateEvent(@Body() body: UpdateEventDto, @Param('id') id: string) {
+    return await this.eventsService.updateEvent(id, body);
+  }
+
+  @Delete(':id')
+  async deleteEvent(@Param('id') id: string, @Res() response: Response) {
+    await this.eventsService.deleteEvent(id);
+
+    return response.status(204).send();
   }
 
   @Post()

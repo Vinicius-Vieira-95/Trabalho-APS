@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+/* eslint-disable prettier/prettier */
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { EventRepository } from '@/domain/repositories/event.repository';
+import { IUpdateEventDto } from '@/domain/dto/updateEventDto';
 import { ICreateEventDto } from '@/domain/dto/createEventDto';
 import { Event, EventStatus } from '@prisma/client';
 
@@ -53,4 +55,28 @@ export class PrismaEventRepository implements EventRepository {
       },
     });
   }
+
+  async updateEvent(id: string, data: IUpdateEventDto): Promise<Event> {
+    try {
+      await this.prisma.event.findUnique({ where: { id } });
+
+      const eventUpdated = await this.prisma.event.update({
+        where: { id },
+        data,
+      });
+
+      return eventUpdated;
+    } catch (error) {
+      throw new NotFoundException('Event not found');
+    }
+  }
+
+  async deleteEvent(id: string): Promise<void> {
+    try {
+      await this.prisma.event.findUnique({ where: { id } });
+
+      await this.prisma.event.delete({ where: { id } });
+    } catch (error) {
+      throw new NotFoundException('Event not found');
+    }}
 }

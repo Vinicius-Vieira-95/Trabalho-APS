@@ -10,7 +10,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     setOpenEvents(true);
-    setActiveItem("evento2");
+    setActiveItem("evento3");
   }, []);
 
   const toggleEvents = () => {
@@ -97,8 +97,8 @@ const Sidebar = () => {
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/"
                   className={`flex items-center p-2 rounded-lg ${
                     activeItem === "evento3"
                       ? "text-green-600"
@@ -107,31 +107,18 @@ const Sidebar = () => {
                   onClick={() => handleItemClick("evento3")}
                 >
                   Em Aberto
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`flex items-center p-2 rounded-lg ${
-                    activeItem === "evento4"
-                      ? "text-green-600"
-                      : "text-gray-900 hover:bg-gray-100"
-                  }`}
-                  onClick={() => handleItemClick("evento4")}
-                >
-                  Em andamento
-                </a>
+                </Link>
               </li>
             </ul>
           )}
         </ul>
       </div>
 
-      <div className="flex items-center mb-4 ml-2">
+      <div className="flex items-center mb-4 ml-1">
         <img
           src="../../../../img/icon/avatar.png"
           alt="Avatar"
-          className="rounded-full mr-1 w-12 h-12"
+          className="rounded-full  w-12 h-12"
         />
         <div>
           <p className="font-semibold">{user?.name}</p>
