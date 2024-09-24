@@ -90,8 +90,6 @@ export class PrismaEventRepository implements EventRepository {
   }
 
   async findEventsByUserId(userId: string): Promise<Event[]> {
-    console.log('🟢🟢🟢🟢 teste');
-
     return await this.prisma.event.findMany({
       where: { userId, status: 'OPEN' },
     });
