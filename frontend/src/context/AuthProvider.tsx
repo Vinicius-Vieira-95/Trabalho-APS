@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { mockUsers } from "../mock/mockUsers";
 import { AuthContextProps, AuthProviderProps, User } from "../models/interface";
 import { AuthContext } from "../hook/useAuth";
@@ -6,6 +6,16 @@ import { AuthContext } from "../hook/useAuth";
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    const storedToken = localStorage.getItem("token");
+
+    if (storedUser && storedToken) {
+      setUser(JSON.parse(storedUser));
+      setToken(storedToken);
+    }
+  }, []);
 
   const login = (email: string, password: string) => {
     const validarUser: User | undefined = mockUsers.find(

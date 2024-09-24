@@ -1,7 +1,9 @@
 import api from "../../api";
 import { User } from "../../models/interface";
 
-const GetPresenceList = async (eventId: string): Promise<User[]> => {
+const GetPresenceList = async (
+  eventId: string
+): Promise<{ userId: string; attended: boolean; user: User }[]> => {
   try {
     const response = await api.get(`/events/presence-list/${eventId}`);
     return response.data;

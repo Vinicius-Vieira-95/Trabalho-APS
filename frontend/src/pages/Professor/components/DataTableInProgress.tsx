@@ -23,7 +23,8 @@ const DataTableInProgress = () => {
   const [eventId, setEventId] = useState<string>();
   const [presenceLink, setPresenceLink] = useState<string>();
   const [eventIds, setEventIds] = useState<string[]>();
-  const [users, setUsers] = useState<User[]>();
+  const [frequencyList, setFrequencyList] =
+    useState<{ userId: string; attended: boolean; user: User }[]>();
 
   const [timeQRCodeOpened, setTimeQRCodeOpened] = useState<number>();
 
@@ -67,12 +68,7 @@ const DataTableInProgress = () => {
 
   const fetchFrequencyList = async (eventId: string) => {
     const data = await GetPresenceList(eventId);
-    console.log("Dados retornados:", data);
-    if (Array.isArray(data)) {
-      setUsers(data);
-    } else {
-      console.error("Dados retornados não são um array");
-    }
+    setFrequencyList(data);
   };
 
   const handleFinishCourse = async (eventId: string) => {
@@ -95,12 +91,8 @@ const DataTableInProgress = () => {
 
           {presenceLink ? (
             <>
-              <div className="my-10">
-                <QRCodeSVG
-                  width={"100%"}
-                  height={"100%"}
-                  value={presenceLink}
-                />
+              <div className="my-10 flex items-center justify-center">
+                <QRCodeSVG width={"70%"} height={"70%"} value={presenceLink} />
               </div>
               <div className="flex gap-4 *:flex-1">
                 <Button
@@ -179,7 +171,7 @@ const DataTableInProgress = () => {
         title="Lista de frequência"
         open={openModal2}
       >
-        <div style={{ marginTop: 30 }}>
+        <div style={{ marginTop: 30 }} className="w-96">
           <div className="my-10">
             <table className="min-w-full table-auto border-collapse">
               <thead className="bg-gray-100">
@@ -193,15 +185,15 @@ const DataTableInProgress = () => {
                 </tr>
               </thead>
               <tbody>
-                {users?.map((user) => (
-                  <tr key={user.id} className="hover:bg-gray-50">
+                {frequencyList?.map((frequency) => (
+                  <tr key={frequency.userId} className="hover:bg-gray-50">
                     <td className="px-4 py-2 border-b border-gray-200">
-                      {user.name}
+                      {frequency.user.name}
                     </td>
                     <td className="px-4 py-2 border-b border-gray-200">
                       <input
-                        checked={user.attended} // Add this if you want to bind selected state
-                        id={`checkbox-${user.id}`}
+                        defaultChecked={frequency.attended}
+                        id={`checkbox-${frequency.userId}`}
                         type="checkbox"
                         className="w-4 h-4 text-gray-600 bg-gray-100 border-gray-300 rounded focus:ring-gray-500 dark:focus:ring-gray-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                       />
@@ -243,50 +235,56 @@ const DataTableInProgress = () => {
           </div>
         </div>
       </Modal>
-      {events.map((event) => (
-        <div className="shadow-lg w-72 rounded-lg p-9 flex justify-between flex-col">
-          <div>
-            <img
-              src="../../img/uece-logocompleta.png"
-              alt="Universidade Estadual do Ceará"
-              className="mb-2 w-[20rem] mr-2"
-            />
-            <h1>{event.name}</h1>
-            <span className="text-sm text-gray-600">{event.description}</span>
-          </div>
-          <div className="flex flex-col gap-2 mt-4">
-            <button
-              onClick={() => {
-                setOpenModal(true);
-                setEventId(event.id);
-              }}
-              className="rounded-lg bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:green-blue-500"
-            >
-              Coletar presenças
-            </button>
-            <button
-              onClick={async () => {
-                handleFinishCourse(event.id);
-              }}
-              className="rounded-lg bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:red-blue-500"
-            >
-              Finalizar curso
-            </button>
-            {eventIds?.includes(event.id) && event.autoFrequency && (
+      {events.length ? (
+        events.map((event) => (
+          <div className="shadow-lg w-72 rounded-lg p-9 flex justify-between flex-col">
+            <div>
+              <img
+                src="../../img/uece-logocompleta.png"
+                alt="Universidade Estadual do Ceará"
+                className="mb-2 w-[20rem] mr-2"
+              />
+              <h1>{event.name}</h1>
+              <span className="text-sm text-gray-600">{event.description}</span>
+            </div>
+            <div className="flex flex-col gap-2 mt-4">
+              <button
+                onClick={() => {
+                  setOpenModal(true);
+                  setEventId(event.id);
+                }}
+                className="rounded-lg bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:green-blue-500"
+              >
+                Coletar presenças
+              </button>
               <button
                 onClick={async () => {
-                  setOpenModal2(true);
-                  setEventId(event.id);
-                  await fetchFrequencyList(event.id);
+                  handleFinishCourse(event.id);
                 }}
-                className="rounded-lg bg-white hover:bg-white text-gray-700 font-bold py-2 px-4 border border-gray-700 hover:gray-500"
+                className="rounded-lg bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:red-blue-500"
               >
-                Lista de frequência
+                Finalizar curso
               </button>
-            )}
+              {eventIds?.includes(event.id) && event.autoFrequency && (
+                <button
+                  onClick={async () => {
+                    setOpenModal2(true);
+                    setEventId(event.id);
+                    await fetchFrequencyList(event.id);
+                  }}
+                  className="rounded-lg bg-white hover:bg-white text-gray-700 font-bold py-2 px-4 border border-gray-700 hover:gray-500"
+                >
+                  Lista de frequência
+                </button>
+              )}
+            </div>
           </div>
+        ))
+      ) : (
+        <div className="w-full h-screen flex items-center justify-center">
+          <span>Não há eventos em andamento</span>
         </div>
-      ))}
+      )}
     </div>
   );
 };

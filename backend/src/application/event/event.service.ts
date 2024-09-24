@@ -48,11 +48,13 @@ export class EventService {
   async getPresenceList(eventId: string) {
     const frequencyList = await this.frequencyRepository.findByEventId(eventId);
 
-    const users = frequencyList?.usersList.map(async (user) => {
-      const userFound = await this.userRepository.findById(user.userId);
+    const users = await Promise.all(
+      frequencyList?.usersList.map(async (user) => {
+        const userFound = await this.userRepository.findById(user.userId);
 
-      return { ...user, user: userFound };
-    });
+        return { ...user, user: userFound };
+      }),
+    );
 
     return users;
   }

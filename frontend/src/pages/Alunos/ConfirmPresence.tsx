@@ -35,6 +35,9 @@ const ConfirmPresence: React.FC = () => {
           <>Presença confirmada com sucesso!</>
         ) : (
           <>
+            <span>
+              Digite o seu e-mail abaixo para confirmar a sua presença.
+            </span>
             <TextField
               label="Email"
               type="email"
@@ -46,7 +49,7 @@ const ConfirmPresence: React.FC = () => {
             <Button
               type="submit"
               variant="contained"
-              color="primary"
+              color="success"
               className="mt-4"
             >
               Confirmar

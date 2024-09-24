@@ -117,7 +117,7 @@ const Sidebar = () => {
                       ? "text-green-600"
                       : "text-gray-900 hover:bg-gray-100"
                   }`}
-                  onClick={() => setActiveItem("evento4")}
+                  onClick={() => handleItemClick("evento4")}
                 >
                   Em Andamento
                 </Link>
