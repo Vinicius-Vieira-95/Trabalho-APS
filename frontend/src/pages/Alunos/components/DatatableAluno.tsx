@@ -37,6 +37,7 @@ const DatatableAluno = () => {
     id: string;
     date: string;
     description: string;
+    duration: string;
   }>();
 
   const [modalRegisterEventOpen, setModalRegisterEventOpen] =
@@ -47,11 +48,9 @@ const DatatableAluno = () => {
   const handleOpenModalRegisterEvent = (event: Event) => {
     setModalData({
       id: event.id,
-      date:
-        format(new Date(event.startDate), "dd/MM/yyyy") +
-        " - " +
-        format(new Date(event.endDate), "dd/MM/yyyy"),
+      duration: event.startDate + " - " + event.endDate,
       description: event.description,
+      date: format(event.date, "dd/MM/yyyy"),
     });
     setModalRegisterEventOpen(true);
   };
@@ -59,11 +58,9 @@ const DatatableAluno = () => {
   const handleOpenModalUnregisterEvent = (event: Event) => {
     setModalData({
       id: event.id,
-      date:
-        format(new Date(event.startDate), "dd/MM/yyyy") +
-        " - " +
-        format(new Date(event.endDate), "dd/MM/yyyy"),
+      duration: event.startDate + " - " + event.endDate,
       description: event.description,
+      date: format(event.date, "dd/MM/yyyy"),
     });
     setModalUnregisterEventOpen(true);
   };

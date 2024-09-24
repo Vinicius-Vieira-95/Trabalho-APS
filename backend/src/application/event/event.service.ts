@@ -198,4 +198,12 @@ export class EventService {
   async deleteEvent(id: string) {
     return await this.eventRepository.deleteEvent(id);
   }
+
+  async findEventById(id: string) {
+    return await this.eventRepository.findById(id);
+  }
+
+  async findEventsByUserId(userId: string) {
+    return await this.eventRepository.findEventsByUserId(userId);
+  }
 }

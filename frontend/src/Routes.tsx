@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import LoginPage from "./pages/Login/LoginPage";
 import AlunosPage from "./pages/Alunos/Alunos";
+
 import ProfessorPage from "./pages/Professor/Professor";
 import { useAuth } from "./hook/useAuth";
 import Dashboard from "./pages/Alunos/Dashboard";
@@ -8,6 +9,7 @@ import { Role } from "./models/interface";
 import InProgressCourses from "./pages/Professor/InProgressCourses";
 import ConfirmPresence from "./pages/Alunos/ConfirmPresence";
 import CreateEvent from "./pages/Professor/CreateEvent";
+import UpdateEvent from "./pages/Professor/UpdateEvent";
 
 const AppRouter: React.FC = () => {
   const auth = useAuth();
@@ -39,6 +41,7 @@ const AppRouter: React.FC = () => {
               <>
                 <Route path="/em-andamento" element={<InProgressCourses />} />
                 <Route path="/professor" element={<ProfessorPage />} />
+                <Route path="/:id/editar-evento" element={<UpdateEvent />} />
                 <Route path="/criar-evento" element={<CreateEvent />} />
                 <Route path="*" element={<Navigate to="/professor" />} />
               </>
