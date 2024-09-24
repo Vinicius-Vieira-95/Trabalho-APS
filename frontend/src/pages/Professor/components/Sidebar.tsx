@@ -1,30 +1,37 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../../hook/useAuth";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Sidebar = () => {
   const [openEvents, setOpenEvents] = useState(true);
   const [activeItem, setActiveItem] = useState("evento3");
   const [hoveredEvents, setHoveredEvents] = useState(false);
   const { user } = useAuth() || {};
+  const location = useLocation();
 
   useEffect(() => {
-    setOpenEvents(true);
-    setActiveItem("evento3");
-  }, []);
+    switch (location.pathname) {
+      case "/professor":
+        setActiveItem("evento3");
+        break;
+      case "/criar-evento":
+        setActiveItem("evento1");
+        break;
+      case "/em-andamento":
+        setActiveItem("evento4");
+        break;
+     
+    }
+  }, [location.pathname]);
 
   const toggleEvents = () => {
     setOpenEvents((prev) => !prev);
   };
 
-  const handleItemClick = (item: React.SetStateAction<string>) => {
-    setActiveItem(item);
-  };
-
   return (
     <aside
       id="default-sidebar"
-      className="w-64 h-screen bg-white shadow-md flex flex-col"
+      className="w-64 h-screen fixed bg-white shadow-md border border-gray-100 flex flex-col"
       aria-label="Sidebar"
     >
       <div className="flex-grow px-3 py-4 overflow-y-auto">
@@ -42,11 +49,10 @@ const Sidebar = () => {
               onClick={toggleEvents}
               onMouseEnter={() => setHoveredEvents(true)}
               onMouseLeave={() => setHoveredEvents(false)}
-              className={`relative flex items-center p-2 rounded-lg w-full text-left text-gray-900 transition-colors   
-                ${hoveredEvents ? "bg-gray-100" : ""}   
-                ${openEvents ? "bg-gray-100" : ""}`}
+              className={`relative flex items-center p-2 rounded-lg w-full text-left text-gray-900 transition-colors  
+              ${hoveredEvents || openEvents ? "bg-gray-100" : ""}`}
             >
-              <span className="flex-1">Eventos</span>
+              <span className="flex-1 font-inter text-TextSide">Eventos</span>
               <svg
                 className="w-3 h-3"
                 aria-hidden="true"
@@ -62,12 +68,11 @@ const Sidebar = () => {
                   d="m1 1 4 4 4-4"
                 />
               </svg>
-              {hoveredEvents && (
-                <span className="absolute left-full w-1.5 h-full bg-green-500 rounded-r-lg"></span>
+              {(hoveredEvents || activeItem.includes("evento")) && (
+                <span className="absolute right-0 w-1.5 h-full bg-green-500 rounded-r-lg"></span>
               )}
             </button>
           </li>
-
           {openEvents && (
             <ul className="ml-4 space-y-2">
               <li>
@@ -78,33 +83,33 @@ const Sidebar = () => {
                       ? "text-green-600"
                       : "text-gray-900 hover:bg-gray-100"
                   }`}
-                  onClick={() => handleItemClick("evento1")}
+                  onClick={() => setActiveItem("evento1")}
                 >
                   Criar novo evento
                 </Link>
               </li>
-              <li>
-                <a
-                  href="#"
+               <li>
+                <Link
+                  to="/professor"
                   className={`flex items-center p-2 rounded-lg ${
                     activeItem === "evento2"
                       ? "text-green-600"
                       : "text-gray-900 hover:bg-gray-100"
                   }`}
-                  onClick={() => handleItemClick("evento2")}
+                  onClick={() => setActiveItem("evento2")}
                 >
                   Histórico
-                </a>
-              </li>
+                </Link>
+              </li> 
               <li>
                 <Link
-                  to="/"
+                  to="/professor"
                   className={`flex items-center p-2 rounded-lg ${
                     activeItem === "evento3"
                       ? "text-green-600"
                       : "text-gray-900 hover:bg-gray-100"
                   }`}
-                  onClick={() => handleItemClick("evento3")}
+                  onClick={() => setActiveItem("evento3")}
                 >
                   Em Aberto
                 </Link>
@@ -117,7 +122,7 @@ const Sidebar = () => {
                       ? "text-green-600"
                       : "text-gray-900 hover:bg-gray-100"
                   }`}
-                  onClick={() => handleItemClick("evento4")}
+                  onClick={() => setActiveItem("evento4")}
                 >
                   Em Andamento
                 </Link>
@@ -127,11 +132,11 @@ const Sidebar = () => {
         </ul>
       </div>
 
-      <div className="flex items-center mb-4 ml-1">
+      <div className="flex items-center mb-4 ml-2">
         <img
           src="../../../../img/icon/avatar.png"
           alt="Avatar"
-          className="rounded-full  w-12 h-12"
+          className="rounded-full mr-1 w-12 h-12"
         />
         <div>
           <p className="font-semibold">{user?.name}</p>
