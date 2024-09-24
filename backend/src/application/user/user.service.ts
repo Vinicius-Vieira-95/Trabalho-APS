@@ -12,4 +12,12 @@ export class UserService {
 
     return user;
   }
+
+  async createStudentUser() {
+    return await this.userRepository.createStudentUser();
+  }
+
+  async createTeacherUser() {
+    return await this.userRepository.createTeacherUser();
+  }
 }

@@ -1,22 +1,19 @@
 export interface User {
-    id?: number;
-    name?:string;
-    email?: string
-    password: string;
-    type: number
-    
+  id?: string;
+  name?: string;
+  email?: string;
+  password: string;
+  type: number;
 }
 
 export interface AuthContextProps {
     isAuthenticated: () => boolean;
     user: User | null;
-    login: (password: string) => boolean;
+    login: (email: string,password: string) => boolean;
     logout: () => void;
     token: string | null; 
 }
 
-
-
 export interface AuthProviderProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }

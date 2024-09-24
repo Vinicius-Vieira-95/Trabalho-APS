@@ -27,4 +27,28 @@ export class PrismaUserRepository implements UserRepository {
       throw new NotFoundException('User not found');
     }
   }
+
+  async createStudentUser(): Promise<User> {
+    return await this.prisma.user.create({
+      data: {
+        email: 'student@student.com',
+        name: 'Student',
+        password: '1234',
+        registration: '123456',
+        type: 'STUDENT',
+      },
+    });
+  }
+
+  async createTeacherUser(): Promise<User> {
+    return await this.prisma.user.create({
+      data: {
+        email: 'student@student.com',
+        name: 'Student',
+        password: '1234',
+        registration: '12345',
+        type: 'TEACHER',
+      },
+    });
+  }
 }
