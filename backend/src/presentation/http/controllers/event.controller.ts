@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Res,
 } from '@nestjs/common';
 import { CreateEventDto } from '@/domain/dto/createEventDto';
@@ -41,6 +42,22 @@ export class EventController {
       return response
         .status(200)
         .send(ok(await this.eventsService.getInProgressEvents()));
+    } catch (error) {
+      return response.status(error.status).send(handleError(error));
+    }
+  }
+
+  @Get('finished/user/:userId')
+  async getFinishedEvents(
+    @Res() response: Response,
+    @Param('userId') userId: string,
+    @Query('status')
+    status: EventStatus,
+  ) {
+    try {
+      return response
+        .status(200)
+        .send(ok(await this.eventsService.getFinishedEvents(status, userId)));
     } catch (error) {
       return response.status(error.status).send(handleError(error));
     }

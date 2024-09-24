@@ -21,11 +21,23 @@ import { ModalRegisterEvent } from "./ModalRegisterEvent";
 import { useAuth } from "../../../hook/useAuth";
 import { format } from "date-fns";
 import { registerUnregisterEvent } from "../../../service/Event/register-unregister-event";
+import GetFinishedList from "../../../service/Event/GetFinishedList";
+import { ModalEventDetails } from "./ModalEventDetails";
 
 type Order = "asc" | "desc";
 
-const DatatableAluno = () => {
+export enum EventType {
+  FINISHED = "FINISHED",
+  OPEN = "OPEN",
+}
+
+type props = {
+  type: EventType;
+};
+
+const DatatableAluno = ({ type }: props) => {
   const auth = useAuth();
+  console.log("type", type);
 
   const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState<keyof Event>("name");
@@ -40,9 +52,18 @@ const DatatableAluno = () => {
     duration: string;
   }>();
 
+  const [modalDetailsData, setModalDetailsData] = useState<{
+    date: string;
+    duration: string;
+    description: string;
+    present: string;
+  }>();
+
   const [modalRegisterEventOpen, setModalRegisterEventOpen] =
     useState<boolean>(false);
   const [modalUnregisterEventOpen, setModalUnregisterEventOpen] =
+    useState<boolean>(false);
+  const [modalEventDetailsOpen, setModalEventDetailsOpen] =
     useState<boolean>(false);
 
   const handleOpenModalRegisterEvent = (event: Event) => {
@@ -65,20 +86,43 @@ const DatatableAluno = () => {
     setModalUnregisterEventOpen(true);
   };
 
+  const handleOpenModalEventDetails = (event: Event) => {
+    const present = event.usersList.find(
+      (userList) =>
+        userList.userId === auth?.user?.id && userList.attended === true
+    );
+    setModalDetailsData({
+      // id: event.id,
+      date: format(new Date(event.date), "dd/MM/yyyy"),
+      description: event.description,
+      duration: event.startDate + " - " + event.endDate,
+      // hoursCounted: "hoursCounted",
+      present: present ? "Sim" : "Não",
+    });
+    setModalEventDetailsOpen(true);
+  };
+
   const handleCloseModalRegisterEvent = () => setModalRegisterEventOpen(false);
   const handleCloseModalUnregisterEvent = () =>
     setModalUnregisterEventOpen(false);
+  const handleCloseModalEventDetails = () => setModalEventDetailsOpen(false);
 
   const handleRegisterUnregisterUser = async (eventId: string) => {
     await registerUnregisterEvent(eventId, auth?.user?.id || "mocked-id");
     await fetchEventos();
     if (modalRegisterEventOpen) handleCloseModalRegisterEvent();
     if (modalUnregisterEventOpen) handleCloseModalUnregisterEvent();
+    if (modalEventDetailsOpen) handleCloseModalEventDetails();
   };
 
   const fetchEventos = async (): Promise<void> => {
     try {
-      const data = await GetEventList();
+      let data;
+      if (type === EventType.OPEN) {
+        data = await GetEventList();
+      } else if (type === EventType.FINISHED) {
+        data = await GetFinishedList();
+      }
       console.log("Dados retornados:", data);
       if (Array.isArray(data)) {
         setEventos(data);
@@ -91,20 +135,6 @@ const DatatableAluno = () => {
   };
 
   useEffect(() => {
-    const fetchEventos = async (): Promise<void> => {
-      try {
-        const data = await GetEventList();
-        console.log("Dados retornados:", data);
-        if (Array.isArray(data)) {
-          setEventos(data);
-        } else {
-          console.error("Dados retornados não são um array", data);
-        }
-      } catch (error) {
-        console.error("Erro ao buscar eventos:", error);
-      }
-    };
-
     fetchEventos();
   }, []);
 
@@ -161,6 +191,12 @@ const DatatableAluno = () => {
         data={modalData}
         open={modalUnregisterEventOpen}
         handleClose={handleCloseModalUnregisterEvent}
+      />
+      <ModalEventDetails
+        // handleRegisterUnregisterUser={handleRegisterUnregisterUser}
+        data={modalDetailsData}
+        open={modalEventDetailsOpen}
+        handleClose={handleCloseModalEventDetails}
       />
 
       <Box>
@@ -233,30 +269,50 @@ const DatatableAluno = () => {
                     />
                   </TableCell>
                   <TableCell sx={{ textAlign: "center" }}>
-                    {evento.usersList.find(
-                      (value) => value.userId === auth?.user?.id
-                    ) ? (
+                    {type === EventType.OPEN &&
+                      (evento.usersList.find(
+                        (value) => value.userId === auth?.user?.id
+                      ) ? (
+                        <Button
+                          onClick={() => {
+                            handleOpenModalUnregisterEvent.bind(null, evento)();
+                          }}
+                          variant="outlined"
+                          sx={{
+                            borderColor: "#FF3B30",
+                            color: "#FF3B30",
+                            borderRadius: "2rem",
+                            "&:hover": {
+                              backgroundColor: "#FF3B30",
+                              color: "white",
+                            },
+                          }}
+                        >
+                          Cancelar
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={() => {
+                            handleOpenModalRegisterEvent.bind(null, evento)();
+                          }}
+                          variant="outlined"
+                          sx={{
+                            borderColor: "#22C55E",
+                            color: "#22C55E",
+                            borderRadius: "2rem",
+                            "&:hover": {
+                              backgroundColor: "#22C55E",
+                              color: "white",
+                            },
+                          }}
+                        >
+                          Inscrever-se
+                        </Button>
+                      ))}
+                    {type === EventType.FINISHED && (
                       <Button
                         onClick={() => {
-                          handleOpenModalUnregisterEvent.bind(null, evento)();
-                        }}
-                        variant="outlined"
-                        sx={{
-                          borderColor: "#FF3B30",
-                          color: "#FF3B30",
-                          borderRadius: "2rem",
-                          "&:hover": {
-                            backgroundColor: "#FF3B30",
-                            color: "white",
-                          },
-                        }}
-                      >
-                        Cancelar
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() => {
-                          handleOpenModalRegisterEvent.bind(null, evento)();
+                          handleOpenModalEventDetails.bind(null, evento)();
                         }}
                         variant="outlined"
                         sx={{
@@ -269,7 +325,7 @@ const DatatableAluno = () => {
                           },
                         }}
                       >
-                        Inscrever-se
+                        Detalhes
                       </Button>
                     )}
                   </TableCell>
