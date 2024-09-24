@@ -7,11 +7,11 @@ export interface User {
 }
 
 export interface AuthContextProps {
-  isAuthenticated: () => boolean;
-  user: User | null;
-  login: (password: string) => boolean;
-  logout: () => void;
-  token: string | null;
+    isAuthenticated: () => boolean;
+    user: User | null;
+    login: (email: string,password: string) => boolean;
+    logout: () => void;
+    token: string | null; 
 }
 
 export interface AuthProviderProps {

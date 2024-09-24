@@ -19,7 +19,7 @@ const LoginPage = () => {
 
   function handlelogin(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
-    if (auth?.login(senha)) {
+    if (auth?.login(email, senha)) {
       navigate("/alunos")
       setMessage("")
     }

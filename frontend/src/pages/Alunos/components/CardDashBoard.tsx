@@ -1,6 +1,8 @@
 import { Box, Paper, Typography, LinearProgress } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Image from "../../../../img/uece-logocompleta.png";
+import Image2 from "../../../../img/funiber-habilidades-lingua-estrangeira.jpg";
+import Image3 from "../../../../img/Etapas-da-pesquisa-cientifica.png";
 
 const CardDashBoard = () => {
   const totalHours = {
@@ -16,7 +18,7 @@ const CardDashBoard = () => {
       maxHours: 60,
       currentHours: 48,
       progress: 80,
-      image: Image,
+      image: Image2,
     },
     {
       title: "Acadêmica / Pesquisa e Produção Científica",
@@ -24,7 +26,7 @@ const CardDashBoard = () => {
       maxHours: 48,
       currentHours: 48,
       progress: 80,
-      image: Image,
+      image: Image3,
     },
     {
         title: "Acadêmica / Ensino",
