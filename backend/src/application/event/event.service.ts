@@ -45,6 +45,18 @@ export class EventService {
     return await this.eventRepository.getByInProgressStatus();
   }
 
+  async getPresenceList(eventId: string) {
+    const frequencyList = await this.frequencyRepository.findByEventId(eventId);
+
+    const users = frequencyList?.usersList.map(async (user) => {
+      const userFound = await this.userRepository.findById(user.userId);
+
+      return { ...user, user: userFound };
+    });
+
+    return users;
+  }
+
   async generateAttendanceSignatureToken({
     eventId,
     timeToExpire,
@@ -62,7 +74,7 @@ export class EventService {
       eventId,
     });
 
-    return token;
+    return { token };
   }
 
   async validateAttendanceSignatureToken({
@@ -120,6 +132,8 @@ export class EventService {
   }
 
   async finishEvent(eventId: string) {
+    console.log('🟢🟢🟢🟢 eventIdaaa', eventId);
+
     return await this.eventRepository.updateStatusById({
       status: 'FINISHED',
       id: eventId,

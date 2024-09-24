@@ -1,4 +1,4 @@
-import { IsEmail, IsNumber, IsUrl } from 'class-validator';
+import { IsEmail, IsNumber } from 'class-validator';
 
 export class AttendanceSignatureDto {
   @IsNumber()
@@ -8,7 +8,4 @@ export class AttendanceSignatureDto {
 export class ValidateSignatureDto {
   @IsEmail()
   email: string;
-
-  @IsUrl()
-  redirectUrl: string;
 }
