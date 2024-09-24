@@ -8,6 +8,7 @@ interface ModalEventsDetailsProps {
     id: string;
     date: string;
     description: string;
+    duration: string;
   };
   handleRegisterUnregisterUser: (eventId: string) => Promise<void>;
 }
@@ -71,6 +72,10 @@ export const ModalUnregisterEvent: FC<ModalEventsDetailsProps> = ({
             <p style={{ fontWeight: "bold", color: "#637381" }}>
               Data de realização:{" "}
               <span style={{ fontWeight: "normal" }}>{data?.date}</span>
+            </p>
+            <p style={{ fontWeight: "bold", color: "#637381" }}>
+              Duração:{" "}
+              <span style={{ fontWeight: "normal" }}>{data?.duration}</span>
             </p>
           </div>
         </div>

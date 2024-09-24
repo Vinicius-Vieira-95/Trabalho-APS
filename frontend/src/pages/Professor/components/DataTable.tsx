@@ -67,7 +67,7 @@ function DataTable() {
               <TableCell sx={{ fontWeight: "bold" }}>Evento</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Descrição</TableCell>
               <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>
-                Categoria
+                Status
               </TableCell>
               <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>
                 Ações
