@@ -77,6 +77,20 @@ export class EventService {
     return finishedEvents;
   }
 
+  async getPresenceList(eventId: string) {
+    const frequencyList = await this.frequencyRepository.findByEventId(eventId);
+
+    const users = await Promise.all(
+      frequencyList?.usersList.map(async (user) => {
+        const userFound = await this.userRepository.findById(user.userId);
+
+        return { ...user, user: userFound };
+      }),
+    );
+
+    return users;
+  }
+
   async generateAttendanceSignatureToken({
     eventId,
     timeToExpire,
@@ -94,7 +108,7 @@ export class EventService {
       eventId,
     });
 
-    return token;
+    return { token };
   }
 
   async validateAttendanceSignatureToken({
@@ -215,5 +229,13 @@ export class EventService {
 
   async deleteEvent(id: string) {
     return await this.eventRepository.deleteEvent(id);
+  }
+
+  async findEventById(id: string) {
+    return await this.eventRepository.findById(id);
+  }
+
+  async findEventsByUserId(userId: string) {
+    return await this.eventRepository.findEventsByUserId(userId);
   }
 }

@@ -7,7 +7,6 @@ import { classValidatorExceptionFactory } from '@/presentation/errors/exceptions
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
-
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,

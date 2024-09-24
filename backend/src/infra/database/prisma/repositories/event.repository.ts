@@ -88,4 +88,8 @@ export class PrismaEventRepository implements EventRepository {
       throw new NotFoundException('Event not found');
     }
   }
+
+  async findEventsByUserId(userId: string): Promise<Event[]> {
+    return await this.prisma.event.findMany({ where: { userId } });
+  }
 }

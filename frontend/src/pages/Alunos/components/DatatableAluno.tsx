@@ -48,6 +48,7 @@ const DatatableAluno = ({ type }: props) => {
     id: string;
     date: string;
     description: string;
+    duration: string;
   }>();
 
   const [modalDetailsData, setModalDetailsData] = useState<{
@@ -67,11 +68,9 @@ const DatatableAluno = ({ type }: props) => {
   const handleOpenModalRegisterEvent = (event: Event) => {
     setModalData({
       id: event.id,
-      date:
-        format(new Date(event.startDate), "dd/MM/yyyy") +
-        " - " +
-        format(new Date(event.endDate), "dd/MM/yyyy"),
+      duration: event.startDate + " - " + event.endDate,
       description: event.description,
+      date: format(event.date, "dd/MM/yyyy"),
     });
     setModalRegisterEventOpen(true);
   };
@@ -79,11 +78,9 @@ const DatatableAluno = ({ type }: props) => {
   const handleOpenModalUnregisterEvent = (event: Event) => {
     setModalData({
       id: event.id,
-      date:
-        format(new Date(event.startDate), "dd/MM/yyyy") +
-        " - " +
-        format(new Date(event.endDate), "dd/MM/yyyy"),
+      duration: event.startDate + " - " + event.endDate,
       description: event.description,
+      date: format(event.date, "dd/MM/yyyy"),
     });
     setModalUnregisterEventOpen(true);
   };
@@ -138,6 +135,20 @@ const DatatableAluno = ({ type }: props) => {
   };
 
   useEffect(() => {
+    const fetchEventos = async (): Promise<void> => {
+      try {
+        const data = await GetEventList();
+        console.log("Dados retornados:", data);
+        if (Array.isArray(data)) {
+          setEventos(data);
+        } else {
+          console.error("Dados retornados não são um array", data);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar eventos:", error);
+      }
+    };
+
     fetchEventos();
   }, []);
 

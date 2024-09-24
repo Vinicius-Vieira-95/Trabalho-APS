@@ -18,4 +18,5 @@ export abstract class EventRepository {
   abstract updateEvent(id: string, data: IUpdateEventDto): Promise<Event>;
   abstract deleteEvent(id: string): Promise<void>;
   abstract getByStatus(status: EventStatus): Promise<Event[]>;
+  abstract findEventsByUserId(userId: string): Promise<Event[]>;
 }

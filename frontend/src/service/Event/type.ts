@@ -3,10 +3,10 @@ export type Event = {
   userId: string;
   name: string;
   activityId: string;
-  date: string;
-  startDate: Date;
+  startDate: string;
   status: string;
-  endDate: Date;
+  endDate: string;
+  date: string;
   usersList: { userId: string; attended: boolean }[];
   description: string;
   autoFrequency: boolean;

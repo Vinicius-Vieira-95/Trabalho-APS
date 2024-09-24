@@ -66,7 +66,7 @@ export class EventController {
   @Post('generate/token/attendance-signature/:eventId')
   async generateAttendanceToken(
     @Res() response: Response,
-    @Param(':eventId') eventId: string,
+    @Param('eventId') eventId: string,
     @Body() tokenProps: AttendanceSignatureDto,
   ) {
     try {
@@ -83,10 +83,35 @@ export class EventController {
     }
   }
 
+  @Get('presence-list/:eventId')
+  async getPresenceList(
+    @Res() response: Response,
+    @Param('eventId') eventId: string,
+  ) {
+    try {
+      return response
+        .status(200)
+        .send(ok(await this.eventsService.getPresenceList(eventId)));
+    } catch (error) {
+      return response.status(error.status).send(handleError(error));
+    }
+  }
+
+  @Post('finish/:eventId')
+  async finish(@Res() response: Response, @Param('eventId') eventId: string) {
+    try {
+      return response
+        .status(200)
+        .send(ok(await this.eventsService.finishEvent(eventId)));
+    } catch (error) {
+      return response.status(error.status).send(handleError(error));
+    }
+  }
+
   @Post('validate/attendance/:signatureToken')
   async validateAttendanceToken(
     @Res() response: Response,
-    @Param(':signatureToken') signatureToken: string,
+    @Param('signatureToken') signatureToken: string,
     @Body() validationProps: ValidateSignatureDto,
   ) {
     try {
@@ -130,6 +155,16 @@ export class EventController {
     return await this.eventsService.updateEvent(id, body);
   }
 
+  @Get(':id')
+  async findEvent(@Param('id') id: string) {
+    return await this.eventsService.findEventById(id);
+  }
+
+  @Get('/user/:userId')
+  async getEventsByUserId(@Param('userId') userId: string) {
+    return await this.eventsService.findEventsByUserId(userId);
+  }
+
   @Delete(':id')
   async deleteEvent(@Param('id') id: string, @Res() response: Response) {
     await this.eventsService.deleteEvent(id);
@@ -140,7 +175,8 @@ export class EventController {
   @Post()
   async create(@Body() body: CreateEventDto, @Res() response: Response) {
     try {
-      const createdEvent = await this.eventsService.create(body);
+      const status = EventStatus.OPEN;
+      const createdEvent = await this.eventsService.create({ ...body, status });
 
       return response.status(201).send(createdEvent);
     } catch (error) {
