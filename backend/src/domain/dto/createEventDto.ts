@@ -1,5 +1,5 @@
 import { EventStatus } from '@prisma/client';
-import { IsBoolean, IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 
 export interface ICreateEventDto {
   name: string;
@@ -23,7 +23,7 @@ export class CreateEventDto {
   description: string;
 
   @IsNotEmpty()
-  @IsUUID()
+  @IsString()
   userId: string;
 
   @IsNotEmpty()
