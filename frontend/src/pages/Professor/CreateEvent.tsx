@@ -2,23 +2,39 @@
 import { useState } from "react";
 import Sidebar from "./components/Sidebar";
 import { Event } from "../../service/Event/type";
+import createEvent from "../../service/Event/createEvent";
+import { mockUsers } from "../../mock/mockUsers";
+
+const initialValues = {
+  name: "",
+  description: "",
+  userId: mockUsers[1].id,
+  activityId: "",
+  autoFrequency: false,
+  date: "",
+  endDate: "",
+  startDate: "",
+};
 
 const CreateEvent = () => {
   const [formValues, setFormValues] = useState<
     Omit<Event, "id" | "status" | "createdAt" | "updatedAt"> & { date: string }
-  >({
-    name: "",
-    description: "",
-    userId: "",
-    activityId: "",
-    autoFrequency: false,
-    date: "",
-    endDate: "",
-    startDate: "",
-  });
-  const handleCreateEvent = (e: any) => {
+  >(initialValues);
+
+  const handleCreateEvent = async (e: any) => {
     e.preventDefault();
-    console.log(formValues);
+
+    try {
+      const data = await createEvent({
+        ...formValues,
+      });
+
+      console.log("Criado: ", data);
+
+      setFormValues(initialValues);
+    } catch (error) {
+      console.error("Erro ao criar evento:", error);
+    }
   };
 
   return (
@@ -37,6 +53,7 @@ const CreateEvent = () => {
                 <input
                   type="text"
                   placeholder="Nome"
+                  value={formValues.name}
                   onChange={(e) =>
                     setFormValues((prev) => ({ ...prev, name: e.target.value }))
                   }
@@ -45,6 +62,7 @@ const CreateEvent = () => {
                 <input
                   type="text"
                   placeholder="Categoria do evento"
+                  value={formValues.activityId}
                   onChange={(e) =>
                     setFormValues((prev) => ({
                       ...prev,
@@ -60,6 +78,7 @@ const CreateEvent = () => {
                   <label>Data do evento:</label>
                   <input
                     type="date"
+                    value={formValues.date}
                     onChange={(e) =>
                       setFormValues((prev) => ({
                         ...prev,
@@ -75,6 +94,7 @@ const CreateEvent = () => {
                   <input
                     type="time"
                     placeholder="startDate"
+                    value={formValues.startDate}
                     onChange={(e) =>
                       setFormValues((prev) => ({
                         ...prev,
@@ -90,6 +110,7 @@ const CreateEvent = () => {
                   <input
                     type="time"
                     placeholder="endDate"
+                    value={formValues.endDate}
                     onChange={(e) =>
                       setFormValues((prev) => ({
                         ...prev,
@@ -104,6 +125,7 @@ const CreateEvent = () => {
               <div>
                 <textarea
                   placeholder="Descrição do evento..."
+                  value={formValues.description}
                   onChange={(e) =>
                     setFormValues((prev) => ({
                       ...prev,
@@ -117,6 +139,7 @@ const CreateEvent = () => {
               <div>
                 <input
                   type="checkbox"
+                  checked={formValues.autoFrequency}
                   onChange={(e) =>
                     setFormValues((prev) => ({
                       ...prev,

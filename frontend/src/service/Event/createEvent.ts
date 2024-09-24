@@ -1,12 +1,12 @@
 import api from "../../api";
 import { Event } from "./type";
 
-const CreateEvent = async (
+const createEvent = async (
   data: Omit<Event, "id" | "status" | "createdAt" | "updatedAt">
 ): Promise<Event> => {
   try {
-    const response = await api.post("/events/open", {
-      data,
+    const response = await api.post("/events", {
+      ...data,
     });
     console.log("response: ", response);
     return response.data;
@@ -16,4 +16,4 @@ const CreateEvent = async (
   }
 };
 
-export default CreateEvent;
+export default createEvent;
