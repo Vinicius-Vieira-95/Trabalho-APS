@@ -160,7 +160,7 @@ export class EventController {
     return await this.eventsService.findEventById(id);
   }
 
-  @Get('/user/:userId')
+  @Get('user/:userId')
   async getEventsByUserId(@Param('userId') userId: string) {
     return await this.eventsService.findEventsByUserId(userId);
   }

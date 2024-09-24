@@ -50,7 +50,7 @@ const CreateEvent = () => {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="flex flex-col w-full justify-center items-center">
+      <div className="flex flex-col h-screen w-full justify-center items-center">
         <div className="mb-10 items-start w-1/2 ml-20">
           <h2 className="text-4xl mb-2">Criar evento</h2>
           <p>Preencha todas as informações sobre o evento abaixo.</p>

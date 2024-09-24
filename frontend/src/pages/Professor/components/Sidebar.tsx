@@ -20,7 +20,6 @@ const Sidebar = () => {
       case "/em-andamento":
         setActiveItem("evento4");
         break;
-     
     }
   }, [location.pathname]);
 
@@ -88,19 +87,6 @@ const Sidebar = () => {
                   Criar novo evento
                 </Link>
               </li>
-               <li>
-                <Link
-                  to="/professor"
-                  className={`flex items-center p-2 rounded-lg ${
-                    activeItem === "evento2"
-                      ? "text-green-600"
-                      : "text-gray-900 hover:bg-gray-100"
-                  }`}
-                  onClick={() => setActiveItem("evento2")}
-                >
-                  Histórico
-                </Link>
-              </li> 
               <li>
                 <Link
                   to="/professor"
