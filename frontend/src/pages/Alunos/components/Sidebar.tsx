@@ -92,7 +92,7 @@ const Sidebar = () => {
             <ul className="ml-4 space-y-2">
               <li>
                 <Link
-                  to="/dasdas"
+                  to="/alunos/historico"
                   className={`relative flex items-center font-inter text-TextSide p-2 rounded-lg ${
                     activeItem === "evento1"
                       ? "text-green-600"

@@ -8,7 +8,7 @@ import { EventRepository } from '@/domain/repositories/event.repository';
 import { IUpdateEventDto } from '@/domain/dto/updateEventDto';
 import { ICreateEventDto } from '@/domain/dto/createEventDto';
 import { TokenAdapter } from '@/infra/adapters/token.adapter';
-import { InvalidParamError } from '@/presentation/errors';
+import { InvalidParamError, ServerError } from '@/presentation/errors';
 import { UserRepository } from '@/domain/repositories/user.repository';
 import { FrequencyRepository } from '@/domain/repositories/frequency.repository';
 import { EventStatus } from '@prisma/client';
@@ -46,11 +46,35 @@ export class EventService {
     return await this.eventRepository.getByInProgressStatus();
   }
 
-  async getFinishedEvents(status: EventStatus) {
+  async getFinishedEvents(status: EventStatus, userId: string) {
     if (status !== EventStatus.FINISHED) {
       throw new InvalidParamError('Status inválido');
     }
-    return await this.eventRepository.getByStatus(status);
+
+    const finishedEvents = [];
+    const events = await this.eventRepository.getByStatus(status);
+    if (!events) {
+      throw new ServerError();
+    }
+
+    for (const event of events) {
+      const frequencyList = await this.frequencyRepository.findByEventId(
+        event.id,
+      );
+
+      const userInFrequencyList = frequencyList.usersList.find(
+        (userList) => userList.userId === userId,
+      );
+
+      if (userInFrequencyList) {
+        finishedEvents.push({
+          ...event,
+          usersList: frequencyList?.usersList || [],
+        });
+      }
+    }
+
+    return finishedEvents;
   }
 
   async generateAttendanceSignatureToken({

@@ -7,7 +7,7 @@ interface ModalEventsDetailsProps {
   data?: {
     date: string;
     duration: string;
-    hoursCounted: string;
+    // hoursCounted: string;
     present: string;
   };
 }
@@ -75,10 +75,10 @@ export const ModalEventDetails: FC<ModalEventsDetailsProps> = ({
               Duração:{" "}
               <span style={{ fontWeight: "normal" }}>{data?.duration}</span>
             </p>
-            <p style={{ fontWeight: "bold", color: "#637381" }}>
+            {/* <p style={{ fontWeight: "bold", color: "#637381" }}>
               Horas contabilizadas:{" "}
               <span style={{ fontWeight: "normal" }}>{data?.hoursCounted}</span>
-            </p>
+            </p> */}
             <p style={{ fontWeight: "bold", color: "#637381" }}>
               Esteve presente:{" "}
               <span style={{ fontWeight: "normal" }}>{data?.present}</span>
@@ -94,6 +94,7 @@ export const ModalEventDetails: FC<ModalEventsDetailsProps> = ({
               textTransform: "initial",
               height: 50,
             }}
+            onClick={handleClose}
           >
             <p style={{ fontSize: 15 }}>Fechar</p>
           </Button>

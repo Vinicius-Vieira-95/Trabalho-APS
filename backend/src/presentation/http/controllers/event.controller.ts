@@ -47,15 +47,17 @@ export class EventController {
     }
   }
 
-  @Get('finished')
+  @Get('finished/user/:userId')
   async getFinishedEvents(
     @Res() response: Response,
-    @Query('status') status: EventStatus,
+    @Param('userId') userId: string,
+    @Query('status')
+    status: EventStatus,
   ) {
     try {
       return response
         .status(200)
-        .send(ok(await this.eventsService.getFinishedEvents(status)));
+        .send(ok(await this.eventsService.getFinishedEvents(status, userId)));
     } catch (error) {
       return response.status(error.status).send(handleError(error));
     }

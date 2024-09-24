@@ -4,6 +4,7 @@ import AlunosPage from "./pages/Alunos/Alunos";
 import ProfessorPage from "./pages/Professor/Professor";
 import { useAuth } from "./hook/useAuth";
 import Dashboard from "./pages/Alunos/Dashboard";
+import StudentsHistoric from "./pages/Alunos/StudentsHistoric";
 
 const AppRouter: React.FC = () => {
   const auth = useAuth();
@@ -25,7 +26,10 @@ const AppRouter: React.FC = () => {
             {auth.user?.type === 0 && (
               <>
                 <Route path="/alunos" element={<AlunosPage />} />
-                <Route path="/dasdas" element={<AlunosPage />} />
+                <Route
+                  path="/alunos/historico"
+                  element={<StudentsHistoric />}
+                />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="*" element={<Navigate to="/alunos" />} />
               </>

@@ -3,6 +3,7 @@ export type Event = {
   userId: string;
   name: string;
   activityId: string;
+  date: string;
   startDate: Date;
   status: string;
   endDate: Date;
